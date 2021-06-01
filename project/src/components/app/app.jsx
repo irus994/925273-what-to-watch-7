@@ -1,7 +1,9 @@
 import React from 'react';
+import General from '../general/general.jsx';
+
 
 function App() {
-  return <p>Hello, world!</p>;
+  return <General/>;
 }
 
 export default App;
