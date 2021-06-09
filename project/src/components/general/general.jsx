@@ -1,9 +1,10 @@
 import React, {Fragment} from 'react';
-import FilmCard from '../film-card/film-card.jsx';
 import PropTypes from 'prop-types';
+import FilmsList from '../films-list/films-list.jsx';
+import {films} from '../../mocks/films.js';
 
 export default function General(props) {
-  const {filmsCount, filmName, genre, year} = props;
+  const {filmName, genre, year} = props;
   return (
     <>
       <section className="film-card">
@@ -102,9 +103,9 @@ export default function General(props) {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {filmsCount.map((i) => <FilmCard key={filmsCount.length + i}/>)}
-          </div>
+          <FilmsList
+            films={films}
+          />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
@@ -131,7 +132,6 @@ export default function General(props) {
 }
 
 General.propTypes = {
-  filmsCount: PropTypes.array.isRequired,
   filmName: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
