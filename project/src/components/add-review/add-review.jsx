@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function AddReview() {
+export default function AddReview(props) {
+  const {filmName} = props;
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -22,7 +24,7 @@ export default function AddReview() {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="#" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                <a href="#" className="breadcrumbs__link">{filmName}</a>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -124,3 +126,7 @@ class AddReviewForm extends React.PureComponent {
       </form>);
   }
 }
+
+AddReview.propTypes = {
+  filmName: PropTypes.string.isRequired,
+};

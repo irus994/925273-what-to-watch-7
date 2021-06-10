@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function FilmCard(props) {
-  const {filmName} = props;
+  const {filmName, id, prevPoster} = props;
   return (
     <article className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
-        <img src="/img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175"/>
+        <img src={`/img/${prevPoster}`} alt={filmName} width="280" height="175"/>
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href='#'>{filmName}</a>
+        <a className="small-film-card__link" href={`/films/${id}`}> {filmName}</a>
       </h3>
     </article>
   );
@@ -17,4 +17,6 @@ export default function FilmCard(props) {
 
 FilmCard.propTypes = {
   filmName: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  prevPoster: PropTypes.string.isRequired,
 };

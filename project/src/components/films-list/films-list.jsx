@@ -7,10 +7,13 @@ export default function FilmsList() {
   return (
     <div className="catalog__films-list">
       {
-        films.map((i) => (
+        films.map((film) => (
           <FilmCard
-            key={films.length + i}
-            filmName={films[1].name}
+            key={film.name}
+            filmName={film.name}
+            prevVideo={film.video}
+            id={film.id}
+            prevPoster={film.prevPoster}
           />))
       }
     </div>

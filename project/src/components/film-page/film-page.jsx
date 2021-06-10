@@ -1,19 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function FilmPage() {
+export default function FilmPage(props) {
+  const {filmName, genre, year} = props;
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="../project/public/img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+            <img src="/img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
             <div className="logo">
-              <a href="main.html" className="logo__link">
+              <a href="/" className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
@@ -23,7 +25,7 @@ export default function FilmPage() {
             <ul className="user-block">
               <li className="user-block__item">
                 <div className="user-block__avatar">
-                  <img src="../project/public/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+                  <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
                 </div>
               </li>
               <li className="user-block__item">
@@ -34,10 +36,10 @@ export default function FilmPage() {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{filmName}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{year}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -62,7 +64,7 @@ export default function FilmPage() {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="../project/public/img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
             </div>
 
             <div className="film-card__desc">
@@ -174,3 +176,9 @@ export default function FilmPage() {
     </>
   );
 }
+
+FilmPage.propTypes = {
+  filmName: PropTypes.string.isRequired,
+  year: PropTypes.string.isRequired,
+  genre: PropTypes.string.isRequired,
+};
