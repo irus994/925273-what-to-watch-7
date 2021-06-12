@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export default PropTypes.shape({
+export const filmPropTypes = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,

@@ -1,10 +1,11 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import FilmsList from '../films-list/films-list.jsx';
-import {films} from '../../mocks/films.js';
+import {filmPropTypes} from '../films-prop-types';
+import {Link} from 'react-router-dom';
 
 export default function General(props) {
-  const {filmName, genre, year} = props;
+  const {films, topFilm} = props;
   return (
     <>
       <section className="film-card">
@@ -16,11 +17,11 @@ export default function General(props) {
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <a className="logo__link">
+            <Link className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <ul className="user-block">
@@ -30,7 +31,7 @@ export default function General(props) {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
+              <Link className="user-block__link">Sign out</Link>
             </li>
           </ul>
         </header>
@@ -42,10 +43,10 @@ export default function General(props) {
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmName}</h2>
+              <h2 className="film-card__title">{topFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__genre">{topFilm.genre}</span>
+                <span className="film-card__year">{topFilm.year}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -72,34 +73,34 @@ export default function General(props) {
 
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
+              <Link to="#" className="catalog__genres-link">All genres</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
+              <Link to="#" className="catalog__genres-link">Comedies</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
+              <Link to="#" className="catalog__genres-link">Crime</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
+              <Link to="#" className="catalog__genres-link">Documentary</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
+              <Link to="#" className="catalog__genres-link">Dramas</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
+              <Link to="#" className="catalog__genres-link">Horror</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids & Family</a>
+              <Link to="#" className="catalog__genres-link">Kids & Family</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
+              <Link to="#" className="catalog__genres-link">Romance</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
+              <Link to="#" className="catalog__genres-link">Sci-Fi</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
+              <Link to="#" className="catalog__genres-link">Thrillers</Link>
             </li>
           </ul>
 
@@ -114,11 +115,11 @@ export default function General(props) {
 
         <footer className="page-footer">
           <div className="logo">
-            <a className="logo__link logo__link--light">
+            <Link className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <div className="copyright">
@@ -126,13 +127,11 @@ export default function General(props) {
           </div>
         </footer>
       </div>
-
     </>
   );
 }
 
 General.propTypes = {
-  filmName: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  year: PropTypes.number.isRequired,
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
+  topFilm: filmPropTypes,
 };

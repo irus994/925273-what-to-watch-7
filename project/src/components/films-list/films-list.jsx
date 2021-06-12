@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import FilmCard from '../film-card/film-card.jsx';
-import {films} from '../../mocks/films.js';
+import PropTypes from 'prop-types';
+import {filmPropTypes} from '../films-prop-types';
 
-
-export default function FilmsList() {
+export default function FilmsList(props) {
+  // eslint-disable-next-line no-unused-vars
+  const [activeFilm, setActiveFilm] = useState(null);
+  const {films} = props;
   return (
     <div className="catalog__films-list">
       {
         films.map((film) => (
           <FilmCard
-            key={film.name}
+            onClick={() => {
+              setActiveFilm(film);
+            }}
+            key={film.id}
             filmName={film.name}
             prevVideo={film.video}
             id={film.id}
@@ -19,3 +25,7 @@ export default function FilmsList() {
     </div>
   );
 }
+
+FilmsList.propTypes = {
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
+};

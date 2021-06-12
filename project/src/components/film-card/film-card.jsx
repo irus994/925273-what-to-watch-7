@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 export default function FilmCard(props) {
   const {filmName, id, prevPoster} = props;
@@ -9,7 +10,7 @@ export default function FilmCard(props) {
         <img src={`/img/${prevPoster}`} alt={filmName} width="280" height="175"/>
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href={`/films/${id}`}> {filmName}</a>
+        <Link className="small-film-card__link" to={`/films/${id}`}> {filmName}</Link>
       </h3>
     </article>
   );

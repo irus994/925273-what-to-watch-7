@@ -1,8 +1,9 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function FilmPage(props) {
-  const {filmName, genre, year} = props;
+  const {filmName, genre, year, id} = props;
   return (
     <>
       <section className="film-card film-card--full">
@@ -15,11 +16,11 @@ export default function FilmPage(props) {
 
           <header className="page-header film-card__head">
             <div className="logo">
-              <a href="/" className="logo__link">
+              <Link to="/" className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </a>
+              </Link>
             </div>
 
             <ul className="user-block">
@@ -55,7 +56,7 @@ export default function FilmPage(props) {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -71,13 +72,13 @@ export default function FilmPage(props) {
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
                   <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
+                    <Link to="#" className="film-nav__link">Overview</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
+                    <Link to="#" className="film-nav__link">Details</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
+                    <Link to="#" className="film-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
@@ -161,11 +162,11 @@ export default function FilmPage(props) {
 
         <footer className="page-footer">
           <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
+            <Link to="/" className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <div className="copyright">
@@ -181,4 +182,5 @@ FilmPage.propTypes = {
   filmName: PropTypes.string.isRequired,
   year: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };

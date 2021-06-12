@@ -8,20 +8,19 @@ import MyList from '../my-list/my-list.jsx';
 import SingIn from '../sing-in/sing-in.jsx';
 import Player from '../player/player.jsx';
 import NotFoundScreen from '../non-found-screen/non-found-screen.jsx';
-// import PropTypes from 'prop-types';
-import {films} from '../../mocks/films.js';
+import PropTypes from 'prop-types';
+import {filmPropTypes} from '../films-prop-types.js';
 
-export default function App() {
-  // const {filmName, genre, year} = props;
+export default function App(props) {
+  const {films} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
           <General
-            filmName={films[0].name}
-            genre={films[0].genre}
-            year={films[0].year}
+            topFilm={films[0]}
+            films={films}
           />
         </Route>
         <Route exact path={AppRoute.SING_IN}>
@@ -35,6 +34,7 @@ export default function App() {
             filmName={films[0].name}
             genre={films[0].genre}
             year={films[0].year}
+            id={films[0].id}
           />
         </Route>
         <Route exact path={AppRoute.ADD_REVIEW}>
@@ -55,10 +55,8 @@ export default function App() {
   );
 }
 
-// App.propTypes = {
-//   filmName: PropTypes.string.isRequired,
-//   genre: PropTypes.string.isRequired,
-//   year: PropTypes.number.isRequired,
-// };
+App.propTypes = {
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
+};
 
 
