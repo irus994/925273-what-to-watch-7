@@ -1,19 +1,21 @@
 import React, {useState} from 'react';
-import FilmCard from '../film-card/film-card.jsx';
 import PropTypes from 'prop-types';
+import FilmCard from '../film-card/film-card.jsx';
 import {filmPropTypes} from '../films-prop-types';
 
 export default function FilmsList(props) {
-  // eslint-disable-next-line no-unused-vars
-  const [activeFilm, setActiveFilm] = useState(null);
+  const [, setActiveFilm] = useState(null);
   const {films} = props;
   return (
     <div className="catalog__films-list">
       {
         films.map((film) => (
           <FilmCard
-            onClick={() => {
+            onPointerEnter={() => {
               setActiveFilm(film);
+            }}
+            onPointerLeave={() => {
+              setActiveFilm(null);
             }}
             key={film.id}
             filmName={film.name}

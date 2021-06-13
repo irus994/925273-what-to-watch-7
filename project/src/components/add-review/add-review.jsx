@@ -1,7 +1,7 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AddReviewForm from '../review-form/review-form.jsx';
-import {Link} from 'react-router-dom';
 
 export default function AddReview(props) {
   const {filmName} = props;

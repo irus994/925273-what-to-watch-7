@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FilmsList from '../films-list/films-list.jsx';
 import {filmPropTypes} from '../films-prop-types';
-import {Link} from 'react-router-dom';
 
 export default function General(props) {
   const {films, topFilm} = props;
@@ -17,11 +17,11 @@ export default function General(props) {
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <Link className="logo__link">
+            <a className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </Link>
+            </a>
           </div>
 
           <ul className="user-block">
@@ -31,7 +31,7 @@ export default function General(props) {
               </div>
             </li>
             <li className="user-block__item">
-              <Link className="user-block__link">Sign out</Link>
+              <a className="user-block__link">Sign out</a>
             </li>
           </ul>
         </header>
@@ -115,11 +115,11 @@ export default function General(props) {
 
         <footer className="page-footer">
           <div className="logo">
-            <Link className="logo__link logo__link--light">
+            <a className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </Link>
+            </a>
           </div>
 
           <div className="copyright">

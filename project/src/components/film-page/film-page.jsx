@@ -125,9 +125,9 @@ export default function FilmPage(props) {
                 <img src="/img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175"/>
               </div>
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="#">Fantastic Beasts: The Crimes of
+                <Link className="small-film-card__link" to="#">Fantastic Beasts: The Crimes of
                   Grindelwald
-                </a>
+                </Link>
               </h3>
             </article>
 
@@ -136,7 +136,7 @@ export default function FilmPage(props) {
                 <img src="/img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175"/>
               </div>
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
+                <Link className="small-film-card__link" to="film-page.html">Bohemian Rhapsody</Link>
               </h3>
             </article>
 
@@ -145,7 +145,7 @@ export default function FilmPage(props) {
                 <img src="../project/public/img/macbeth.jpg" alt="Macbeth" width="280" height="175"/>
               </div>
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Macbeth</a>
+                <Link className="small-film-card__link" to="film-page.html">Macbeth</Link>
               </h3>
             </article>
 
@@ -154,7 +154,7 @@ export default function FilmPage(props) {
                 <img src="../project/public/img/aviator.jpg" alt="Aviator" width="280" height="175"/>
               </div>
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
+                <Link className="small-film-card__link" to="film-page.html">Aviator</Link>
               </h3>
             </article>
           </div>

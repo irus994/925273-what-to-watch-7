@@ -1,7 +1,7 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {films} from '../../mocks/films';
 import FilmCard from '../film-card/film-card';
-import {Link} from 'react-router-dom';
 
 export default function MyList () {
   return (

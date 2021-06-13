@@ -4,6 +4,7 @@ import RatingStar from '../rating-star/rating-star.jsx';
 
 export default function AddReviewForm() {
   const [commentText, setCommentText] = useState('');
+  const [userRating, setUserRating] = useState(null);
   return (
     <form onSubmit={(evt) => evt.preventDefault} action="#" className="add-review__form">
       <div className="rating">
@@ -11,6 +12,10 @@ export default function AddReviewForm() {
           {
             starsReview.map((star) => (
               <RatingStar
+                checked={userRating === star}
+                onChange={({target}) => {
+                  setUserRating(Number(target.value));
+                }}
                 key={star + 1}
                 count={star}
               />
