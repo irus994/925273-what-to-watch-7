@@ -1,9 +1,11 @@
 import React, {Fragment} from 'react';
-import FilmCard from '../film-card/film-card.jsx';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import FilmsList from '../films-list/films-list.jsx';
+import {filmPropTypes} from '../films-prop-types';
 
 export default function General(props) {
-  const {filmsCount, filmName, genre, year} = props;
+  const {films, topFilm} = props;
   return (
     <>
       <section className="film-card">
@@ -41,10 +43,10 @@ export default function General(props) {
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmName}</h2>
+              <h2 className="film-card__title">{topFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__genre">{topFilm.genre}</span>
+                <span className="film-card__year">{topFilm.year}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -71,40 +73,40 @@ export default function General(props) {
 
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
+              <Link to="#" className="catalog__genres-link">All genres</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
+              <Link to="#" className="catalog__genres-link">Comedies</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
+              <Link to="#" className="catalog__genres-link">Crime</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
+              <Link to="#" className="catalog__genres-link">Documentary</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
+              <Link to="#" className="catalog__genres-link">Dramas</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
+              <Link to="#" className="catalog__genres-link">Horror</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids & Family</a>
+              <Link to="#" className="catalog__genres-link">Kids & Family</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
+              <Link to="#" className="catalog__genres-link">Romance</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
+              <Link to="#" className="catalog__genres-link">Sci-Fi</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
+              <Link to="#" className="catalog__genres-link">Thrillers</Link>
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {filmsCount.map((i) => <FilmCard key={filmsCount.length + i}/>)}
-          </div>
+          <FilmsList
+            films={films}
+          />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
@@ -125,14 +127,11 @@ export default function General(props) {
           </div>
         </footer>
       </div>
-
     </>
   );
 }
 
 General.propTypes = {
-  filmsCount: PropTypes.array.isRequired,
-  filmName: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  year: PropTypes.number.isRequired,
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
+  topFilm: filmPropTypes,
 };

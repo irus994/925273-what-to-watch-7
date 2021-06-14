@@ -9,19 +9,18 @@ import SingIn from '../sing-in/sing-in.jsx';
 import Player from '../player/player.jsx';
 import NotFoundScreen from '../non-found-screen/non-found-screen.jsx';
 import PropTypes from 'prop-types';
+import {filmPropTypes} from '../films-prop-types.js';
 
 export default function App(props) {
-  const {filmsCount, filmName, genre, year} = props;
+  const {films} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
           <General
-            filmsCount={filmsCount}
-            filmName={filmName}
-            genre={genre}
-            year={year}
+            topFilm={films[0]}
+            films={films}
           />
         </Route>
         <Route exact path={AppRoute.SING_IN}>
@@ -31,13 +30,22 @@ export default function App(props) {
           <MyList/>
         </Route>
         <Route exact path={AppRoute.FILM}>
-          <FilmPage/>
+          <FilmPage
+            filmName={films[0].name}
+            genre={films[0].genre}
+            year={films[0].year}
+            id={films[0].id}
+          />
         </Route>
         <Route exact path={AppRoute.ADD_REVIEW}>
-          <AddReview/>
+          <AddReview
+            filmName={films[0].name}
+          />
         </Route>
         <Route exact path={AppRoute.PLAYER}>
-          <Player/>
+          <Player
+            prevVideo={films[0].video}
+          />
         </Route>
         <Route>
           <NotFoundScreen/>
@@ -48,10 +56,7 @@ export default function App(props) {
 }
 
 App.propTypes = {
-  filmsCount: PropTypes.array.isRequired,
-  filmName: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  year: PropTypes.number.isRequired,
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
 };
 
 

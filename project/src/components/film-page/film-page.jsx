@@ -1,29 +1,32 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export default function FilmPage() {
+export default function FilmPage(props) {
+  const {filmName, genre, year, id} = props;
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="../project/public/img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+            <img src="/img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
             <div className="logo">
-              <a href="main.html" className="logo__link">
+              <Link to="/" className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </a>
+              </Link>
             </div>
 
             <ul className="user-block">
               <li className="user-block__item">
                 <div className="user-block__avatar">
-                  <img src="../project/public/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+                  <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
                 </div>
               </li>
               <li className="user-block__item">
@@ -34,10 +37,10 @@ export default function FilmPage() {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{filmName}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{year}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -53,7 +56,7 @@ export default function FilmPage() {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -62,20 +65,20 @@ export default function FilmPage() {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="../project/public/img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
             </div>
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
                   <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
+                    <Link to="#" className="film-nav__link">Overview</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
+                    <Link to="#" className="film-nav__link">Details</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
+                    <Link to="#" className="film-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
@@ -122,9 +125,9 @@ export default function FilmPage() {
                 <img src="/img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175"/>
               </div>
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="#">Fantastic Beasts: The Crimes of
+                <Link className="small-film-card__link" to="#">Fantastic Beasts: The Crimes of
                   Grindelwald
-                </a>
+                </Link>
               </h3>
             </article>
 
@@ -133,7 +136,7 @@ export default function FilmPage() {
                 <img src="/img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175"/>
               </div>
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
+                <Link className="small-film-card__link" to="film-page.html">Bohemian Rhapsody</Link>
               </h3>
             </article>
 
@@ -142,7 +145,7 @@ export default function FilmPage() {
                 <img src="../project/public/img/macbeth.jpg" alt="Macbeth" width="280" height="175"/>
               </div>
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Macbeth</a>
+                <Link className="small-film-card__link" to="film-page.html">Macbeth</Link>
               </h3>
             </article>
 
@@ -151,7 +154,7 @@ export default function FilmPage() {
                 <img src="../project/public/img/aviator.jpg" alt="Aviator" width="280" height="175"/>
               </div>
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
+                <Link className="small-film-card__link" to="film-page.html">Aviator</Link>
               </h3>
             </article>
           </div>
@@ -159,11 +162,11 @@ export default function FilmPage() {
 
         <footer className="page-footer">
           <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
+            <Link to="/" className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <div className="copyright">
@@ -174,3 +177,10 @@ export default function FilmPage() {
     </>
   );
 }
+
+FilmPage.propTypes = {
+  filmName: PropTypes.string.isRequired,
+  year: PropTypes.string.isRequired,
+  genre: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+};
