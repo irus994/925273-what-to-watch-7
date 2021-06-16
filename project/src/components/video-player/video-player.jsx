@@ -5,14 +5,16 @@ export default function VideoPlayer(props) {
   const {prevPoster, video, isActive} = props;
 
   const videoRef = useRef(null);
+  const playTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (isActive) {
-      setTimeout(() => {
+      playTimeoutRef.current = setTimeout(() => {
         videoRef.current.play();
       }, 1000);
       return;
     }
+    clearTimeout(playTimeoutRef.current);
     videoRef.current.pause();
   }, [isActive]);
 
