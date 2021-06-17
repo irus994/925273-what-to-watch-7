@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
+import {timeoutInterval} from '../const.js';
 
 export default function VideoPlayer(props) {
   const {prevPoster, video, isActive} = props;
@@ -11,11 +12,11 @@ export default function VideoPlayer(props) {
     if (isActive) {
       playTimeoutRef.current = setTimeout(() => {
         videoRef.current.play();
-      }, 1000);
+      }, timeoutInterval);
       return;
     }
     clearTimeout(playTimeoutRef.current);
-    videoRef.current.pause();
+    videoRef.current.load();
   }, [isActive]);
 
   return (

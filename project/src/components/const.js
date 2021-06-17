@@ -12,3 +12,5 @@ export const AppRoute = {
 
 export const starsReview = [10,9,8,7,6,5,4,3,2,1];
 
+export const timeoutInterval = 1000;
+
