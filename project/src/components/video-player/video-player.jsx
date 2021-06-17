@@ -6,18 +6,18 @@ export default function VideoPlayer(props) {
   const {prevPoster, video, isActive} = props;
 
   const videoRef = useRef(null);
-  const playTimeoutRef = useRef(null);
 
   useEffect(() => {
+    const videoCard = videoRef.current;
+    let timeoutId;
     if (isActive) {
-      playTimeoutRef.current = setTimeout(() => {
-        videoRef.current.play();
-      }, timeoutInterval);
+      timeoutId = setTimeout(() => videoCard.play(), timeoutInterval);
     } else {
-      clearTimeout(playTimeoutRef.current);
-      videoRef.current.load();
+      clearTimeout(timeoutId);
+      videoCard.load();
     }
-    return () => clearTimeout(playTimeoutRef.current);
+
+    return () => clearTimeout(timeoutId);
   }, [isActive]);
 
   return (
