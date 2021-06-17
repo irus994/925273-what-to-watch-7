@@ -13,10 +13,11 @@ export default function VideoPlayer(props) {
       playTimeoutRef.current = setTimeout(() => {
         videoRef.current.play();
       }, timeoutInterval);
-      return;
+    } else {
+      clearTimeout(playTimeoutRef.current);
+      videoRef.current.load();
     }
-    clearTimeout(playTimeoutRef.current);
-    videoRef.current.load();
+    return () => clearTimeout(playTimeoutRef.current);
   }, [isActive]);
 
   return (
