@@ -4,7 +4,7 @@ import FilmCard from '../film-card/film-card.jsx';
 import {filmPropTypes} from '../films-prop-types';
 
 export default function FilmsList(props) {
-  const [, setActiveFilm] = useState(null);
+  const [activeFilm, setActiveFilm] = useState(null);
   const {films} = props;
   return (
     <div className="catalog__films-list">
@@ -19,9 +19,10 @@ export default function FilmsList(props) {
             }}
             key={film.id}
             filmName={film.name}
-            prevVideo={film.video}
             id={film.id}
             prevPoster={film.prevPoster}
+            video={film.video}
+            isActive={activeFilm === film}
           />))
       }
     </div>

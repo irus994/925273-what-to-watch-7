@@ -1,14 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import VideoPlayer from '../video-player/video-player.jsx';
 
 export default function FilmCard(props) {
-  const {filmName, id, prevPoster, onPointerEnter, onPointerLeave} = props;
+  const {filmName, id, prevPoster, video, onPointerEnter, onPointerLeave, isActive} = props;
   return (
     <article onPointerEnter={onPointerEnter} onPointerLeave={onPointerLeave} className="small-film-card catalog__films-card">
-      <div className="small-film-card__image">
-        <img src={`/img/${prevPoster}`} alt={filmName} width="280" height="175"/>
-      </div>
+      <VideoPlayer
+        prevPoster={prevPoster}
+        video={video}
+        isActive={isActive}
+      />
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`/films/${id}`}> {filmName}</Link>
       </h3>
@@ -22,4 +25,6 @@ FilmCard.propTypes = {
   prevPoster: PropTypes.string.isRequired,
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
+  video: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };
