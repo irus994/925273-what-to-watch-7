@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import FilmCard from '../film-card/film-card.jsx';
-import {filmPropTypes} from '../films-prop-types';
+import {filmPropTypes} from '../films-prop-types.js';
+import {isSelectedGenre} from '../../filter-genre.js';
 
-export default function FilmsList(props) {
+function FilmsList(props) {
   const [activeFilm, setActiveFilm] = useState(null);
-  const {films} = props;
+  const {films, genre} = props;
   return (
     <div className="catalog__films-list">
       {
-        films.map((film) => (
+        isSelectedGenre(films, genre).map((film) => (
           <FilmCard
             onPointerEnter={() => {
               setActiveFilm(film);
@@ -31,4 +33,16 @@ export default function FilmsList(props) {
 
 FilmsList.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
+  genre: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => (
+  {
+    films: state.films,
+    genre: state.GENRE,
+  }
+);
+
+
+export {FilmsList};
+export default connect(mapStateToProps)(FilmsList);
