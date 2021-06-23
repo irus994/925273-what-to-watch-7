@@ -5,21 +5,14 @@ import {filmPropTypes} from '../films-prop-types.js';
 import {ActionCreator} from '../../store/action.js';
 import {connect} from 'react-redux';
 
-const ALL_GENRE_TEXT = 'All genre';
-const ALL_GENRE = 'ALL_GENRE';
-
+const defaultGenre = 'All genre';
 
 function GenreList(props) {
   const {films, onChangeGenre} = props;
   return (
     <ul className="catalog__genres-list">
-      <Genre
-        key={ALL_GENRE_TEXT}
-        name={ALL_GENRE_TEXT}
-        onClick={() => onChangeGenre(ALL_GENRE)}
-      />
       {
-        [...new Set(films.map((film) => film.genre))].map((genre) => (
+        [...new Set([defaultGenre, ...films.map((film) => film.genre)])].map((genre) => (
           <Genre
             key={genre}
             name={genre}
@@ -29,11 +22,6 @@ function GenreList(props) {
     </ul>
   );
 }
-
-GenreList.propTypes = {
-  films: PropTypes.arrayOf(filmPropTypes).isRequired,
-  onChangeGenre: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = (state) => (
   {
@@ -47,6 +35,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.changeGenre(newGenre));
   },
 });
+
+GenreList.propTypes = {
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
+  onChangeGenre: PropTypes.func.isRequired,
+};
 
 export {GenreList};
 export default connect(mapStateToProps, mapDispatchToProps)(GenreList);

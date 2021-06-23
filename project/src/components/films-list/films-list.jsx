@@ -7,11 +7,11 @@ import {isSelectedGenre} from '../../filter-genre.js';
 
 function FilmsList(props) {
   const [activeFilm, setActiveFilm] = useState(null);
-  const {films, genre} = props;
+  const {films} = props;
   return (
     <div className="catalog__films-list">
       {
-        isSelectedGenre(films, genre).map((film) => (
+        films.map((film) => (
           <FilmCard
             onPointerEnter={() => {
               setActiveFilm(film);
@@ -31,18 +31,16 @@ function FilmsList(props) {
   );
 }
 
-FilmsList.propTypes = {
-  films: PropTypes.arrayOf(filmPropTypes).isRequired,
-  genre: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = (state) => (
   {
-    films: state.films,
-    genre: state.GENRE,
+    films: isSelectedGenre(state.films, state.genre),
+    genre: state.genre,
   }
 );
 
+FilmsList.propTypes = {
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
+};
 
 export {FilmsList};
 export default connect(mapStateToProps)(FilmsList);
