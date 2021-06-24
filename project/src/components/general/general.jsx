@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react';
-import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FilmsList from '../films-list/films-list.jsx';
 import {filmPropTypes} from '../films-prop-types';
+import GenreList from '../genre-list/genre-list.jsx';
 
 export default function General(props) {
   const {films, topFilm} = props;
@@ -70,40 +70,9 @@ export default function General(props) {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <Link to="#" className="catalog__genres-link">All genres</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Comedies</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Crime</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Documentary</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Dramas</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Horror</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Kids & Family</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Romance</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Sci-Fi</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to="#" className="catalog__genres-link">Thrillers</Link>
-            </li>
-          </ul>
-
+          <GenreList
+            films={films}
+          />
           <FilmsList
             films={films}
           />
@@ -135,3 +104,4 @@ General.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
   topFilm: filmPropTypes,
 };
+

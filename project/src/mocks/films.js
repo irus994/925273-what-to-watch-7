@@ -2,7 +2,7 @@ export const films = [
   {
     id: 1,
     name: 'The Best Film',
-    genre: 'comedy',
+    genre: 'Comedy',
     video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: '2021',
     prevPoster: 'moonrise-kingdom.jpg',
@@ -11,7 +11,7 @@ export const films = [
   {
     id: 2,
     name: 'The Bad Film',
-    genre: 'drama',
+    genre: 'Drama',
     video: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
     year: '2006',
     prevPoster: 'no-country-for-old-men.jpg',
@@ -20,7 +20,7 @@ export const films = [
   {
     id: 3,
     name: 'The Boring Film',
-    genre: 'documentary',
+    genre: 'Documentary',
     video: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
     year: '2016',
     prevPoster: 'moonrise-kingdom.jpg',
@@ -29,7 +29,7 @@ export const films = [
   {
     id: 4,
     name: 'The Interesting Film',
-    genre: 'comedy',
+    genre: 'Comedy',
     video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: '2017',
     prevPoster: 'no-country-for-old-men.jpg',
@@ -38,7 +38,7 @@ export const films = [
   {
     id: 5,
     name: 'The Normal Film',
-    genre: 'drama',
+    genre: 'Drama',
     video: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
     year: '2014',
     prevPoster: 'moonrise-kingdom.jpg',
@@ -47,7 +47,7 @@ export const films = [
   {
     id: 6,
     name: 'The Terrible Film',
-    genre: 'horror',
+    genre: 'Horror',
     video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: '2014',
     prevPoster: 'no-country-for-old-men.jpg',
@@ -56,7 +56,7 @@ export const films = [
   {
     id: 7,
     name: 'The Short Film',
-    genre: 'horror',
+    genre: 'Kids & Family',
     video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: '2012',
     prevPoster: 'moonrise-kingdom.jpg',
@@ -65,7 +65,7 @@ export const films = [
   {
     id: 8,
     name: 'The Long Film',
-    genre: 'documentary',
+    genre: 'Documentary',
     video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: '2006',
     prevPoster: 'moonrise-kingdom.jpg',

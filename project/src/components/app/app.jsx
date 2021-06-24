@@ -10,8 +10,9 @@ import Player from '../player/player.jsx';
 import NotFoundScreen from '../non-found-screen/non-found-screen.jsx';
 import PropTypes from 'prop-types';
 import {filmPropTypes} from '../films-prop-types.js';
+import {connect} from 'react-redux';
 
-export default function App(props) {
+function App(props) {
   const {films} = props;
 
   return (
@@ -59,4 +60,11 @@ App.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
 };
 
+const mapStateToProps = (state) => (
+  {
+    films: state.films,
+  }
+);
 
+export {App};
+export default connect(mapStateToProps, null)(App);

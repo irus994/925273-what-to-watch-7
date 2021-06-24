@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import FilmCard from '../film-card/film-card.jsx';
-import {filmPropTypes} from '../films-prop-types';
+import {filmPropTypes} from '../films-prop-types.js';
+import {isSelectedGenre} from '../../filter-genre.js';
 
-export default function FilmsList(props) {
+function FilmsList(props) {
   const [activeFilm, setActiveFilm] = useState(null);
   const {films} = props;
   return (
@@ -29,6 +31,15 @@ export default function FilmsList(props) {
   );
 }
 
+const mapStateToProps = (state) => (
+  {
+    films: isSelectedGenre(state.films, state.genre),
+  }
+);
+
 FilmsList.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
 };
+
+export {FilmsList};
+export default connect(mapStateToProps)(FilmsList);
