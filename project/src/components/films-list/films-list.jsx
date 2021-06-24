@@ -34,7 +34,6 @@ function FilmsList(props) {
 const mapStateToProps = (state) => (
   {
     films: isSelectedGenre(state.films, state.genre),
-    genre: state.genre,
   }
 );
 

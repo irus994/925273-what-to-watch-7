@@ -1,8 +1,9 @@
 import {ActionType} from './action.js';
 import {films} from '../mocks/films.js';
+import {GENRE_DEFAULT} from '../components/const.js';
 
 export const initialState = {
-  genre: 'All genre',
+  genre:  GENRE_DEFAULT,
   films: films,
 };
 

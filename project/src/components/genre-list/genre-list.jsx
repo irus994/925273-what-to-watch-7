@@ -4,15 +4,14 @@ import PropTypes from 'prop-types';
 import {filmPropTypes} from '../films-prop-types.js';
 import {ActionCreator} from '../../store/action.js';
 import {connect} from 'react-redux';
-
-const defaultGenre = 'All genre';
+import {GENRE_DEFAULT} from '../const.js';
 
 function GenreList(props) {
   const {films, onChangeGenre} = props;
   return (
     <ul className="catalog__genres-list">
       {
-        [...new Set([defaultGenre, ...films.map((film) => film.genre)])].map((genre) => (
+        [...new Set([GENRE_DEFAULT, ...films.map((film) => film.genre)])].map((genre) => (
           <Genre
             key={genre}
             name={genre}
@@ -25,7 +24,6 @@ function GenreList(props) {
 
 const mapStateToProps = (state) => (
   {
-    changeGenre: state.CHANGE_GENRE,
     films: state.films,
   }
 );
