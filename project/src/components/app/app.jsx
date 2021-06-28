@@ -1,5 +1,5 @@
 import React from 'react';
-import General from '../general/general.jsx';
+import General, {isCheckedAuth} from '../general/general.jsx';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute} from '../const.js';
 import AddReview from '../add-review/add-review.jsx';
@@ -11,10 +11,16 @@ import NotFoundScreen from '../non-found-screen/non-found-screen.jsx';
 import PropTypes from 'prop-types';
 import {filmPropTypes} from '../films-prop-types.js';
 import {connect} from 'react-redux';
+import LoadingScreen from '../loading-screen/loading-screen';
+
 
 function App(props) {
-  const {films} = props;
-
+  const {films, authorizationStatus, isDataLoaded} = props;
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen/>
+    );
+  }
   return (
     <BrowserRouter>
       <Switch>
@@ -58,13 +64,18 @@ function App(props) {
 
 App.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => (
   {
     films: state.films,
+    authorizationStatus: state.authorizationStatus,
+    isDataLoaded: state.isDataLoaded,
   }
 );
 
 export {App};
 export default connect(mapStateToProps, null)(App);
+

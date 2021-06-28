@@ -14,3 +14,14 @@ export const GENRE_DEFAULT = 'All genre';
 export const starsReview = [10,9,8,7,6,5,4,3,2,1];
 export const timeoutInterval = 1000;
 
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
+
+export const APIRoute = {
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+  FILMS: '/films',
+};

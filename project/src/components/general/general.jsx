@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import FilmsList from '../films-list/films-list.jsx';
-import {filmPropTypes} from '../films-prop-types';
+import {filmPropTypes} from '../films-prop-types.js';
 import GenreList from '../genre-list/genre-list.jsx';
+import {AuthorizationStatus} from '../const.js';
 
 export default function General(props) {
   const {films, topFilm} = props;
@@ -10,7 +11,7 @@ export default function General(props) {
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="/img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+          <img src={topFilm.background} alt={topFilm.name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -39,7 +40,7 @@ export default function General(props) {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="/img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src={topFilm.poster} alt={topFilm.name} width="218" height="327"/>
             </div>
 
             <div className="film-card__desc">
@@ -99,6 +100,9 @@ export default function General(props) {
     </>
   );
 }
+
+export const isCheckedAuth = (authorizationStatus) =>
+  authorizationStatus === AuthorizationStatus.UNKNOWN;
 
 General.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
