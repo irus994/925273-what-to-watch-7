@@ -13,6 +13,9 @@ export const createAPI = (onUnauthorized) => { //этот колбэк выпо�
   const api = axios.create({
     baseURL: baseURL,
     timeout: timeout,
+    headers: {
+      'x-token': token,
+    },
   });
 
   const onSuccess = (response) => response;

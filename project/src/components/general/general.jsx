@@ -4,6 +4,7 @@ import FilmsList from '../films-list/films-list.jsx';
 import {filmPropTypes} from '../films-prop-types.js';
 import GenreList from '../genre-list/genre-list.jsx';
 import {AuthorizationStatus} from '../const.js';
+import UserAuthIcon from '../user-auth-icon/user-auth-icon.jsx';
 
 export default function General(props) {
   const {films, topFilm} = props;
@@ -24,17 +25,7 @@ export default function General(props) {
               <span className="logo__letter logo__letter--3">W</span>
             </a>
           </div>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <UserAuthIcon/>
         </header>
 
         <div className="film-card__wrap">

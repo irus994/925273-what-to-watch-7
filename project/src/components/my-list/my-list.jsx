@@ -1,9 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {films} from '../../mocks/films';
 import FilmCard from '../film-card/film-card';
+import PropTypes from 'prop-types';
+import {filmPropTypes} from '../films-prop-types';
 
-export default function MyList () {
+export default function MyList (props) {
+  const {films} = props;
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -62,3 +64,7 @@ export default function MyList () {
     </div>
   );
 }
+
+MyList.propTypes = {
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
+};

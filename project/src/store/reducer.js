@@ -1,5 +1,4 @@
 import {ActionType} from './action.js';
-// import {films} from '../mocks/films.js';
 import {AuthorizationStatus, GENRE_DEFAULT} from '../components/const.js';
 
 export const initialState = {
@@ -7,6 +6,7 @@ export const initialState = {
   films: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
+  isAuth: false,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -15,11 +15,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         genre: action.payload,
-      };
-    case ActionType.GET_FILMS_LIST:
-      return {
-        ...state,
-        GET_FILMS_LIST: state.films,
       };
     case ActionType.LOAD_FILMS:
       return {
@@ -30,7 +25,8 @@ export const reducer = (state = initialState, action) => {
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
-        authorizationStatus: action.payload,
+        authorizationStatus: action.payload.status,
+        userData: action.payload.userData,
       };
     case ActionType.LOGOUT: {
       return {
