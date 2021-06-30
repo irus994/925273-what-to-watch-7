@@ -1,15 +1,11 @@
 import React, {useRef} from 'react';
-// import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
-// import {AppRoute} from '../const';
 
 export function SingIn ({onSubmit}) {
   const loginRef = useRef();
   const passwordRef = useRef();
-  //
-  // const history = useHistory();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
