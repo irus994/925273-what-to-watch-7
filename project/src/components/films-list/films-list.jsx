@@ -33,7 +33,7 @@ function FilmsList(props) {
 
 const mapStateToProps = (state) => (
   {
-    films: isSelectedGenre(state.films, state.genre),
+    films: isSelectedGenre(state.films.data, state.genre),
   }
 );
 

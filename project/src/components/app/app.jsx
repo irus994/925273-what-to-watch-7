@@ -23,6 +23,8 @@ function App(props) {
       <LoadingScreen/>
     );
   }
+  // eslint-disable-next-line no-console
+  console.log(films);
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -70,9 +72,9 @@ function App(props) {
 
 const mapStateToProps = (state) => (
   {
-    films: state.films,
-    authorizationStatus: state.authorizationStatus,
-    isDataLoaded: state.isDataLoaded,
+    films: state.films.data,
+    authorizationStatus: state.user.authorizationStatus,
+    isDataLoaded: state.films.isDataLoaded,
   }
 );
 

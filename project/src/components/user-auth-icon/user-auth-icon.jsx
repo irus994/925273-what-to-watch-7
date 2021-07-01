@@ -27,8 +27,8 @@ UserAuthIcon.propTypes = {
 
 const mapStateToProps = (state) => (
   {
-    authorizationStatus: state.authorizationStatus,
-    email: state.userData ? state.userData.email : undefined,
+    authorizationStatus: state.user.authorizationStatus,
+    email: state.user.data ? state.user.data.email : undefined,
   }
 );
 

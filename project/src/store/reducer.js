@@ -2,11 +2,15 @@ import {ActionType} from './action.js';
 import {AuthorizationStatus, GENRE_DEFAULT} from '../components/const.js';
 
 export const initialState = {
+  films: {
+    data: [],
+    isDataLoaded: false,
+  },
   genre:  GENRE_DEFAULT,
-  films: [],
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
-  isDataLoaded: false,
-  isAuth: false,
+  user: {
+    data: null,
+    authorizationStatus: AuthorizationStatus.UNKNOWN,
+  },
 };
 
 export const reducer = (state = initialState, action) => {
@@ -19,14 +23,18 @@ export const reducer = (state = initialState, action) => {
     case ActionType.LOAD_FILMS:
       return {
         ...state,
-        films: action.payload,
-        isDataLoaded: true,
+        films: {
+          data: action.payload,
+          isDataLoaded: true,
+        },
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
-        authorizationStatus: action.payload.status,
-        userData: action.payload.userData,
+        user: {
+          authorizationStatus: action.payload.status,
+          data: action.payload.userData,
+        },
       };
     case ActionType.LOGOUT: {
       return {
