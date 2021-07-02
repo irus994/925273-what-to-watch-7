@@ -1,10 +1,16 @@
 import {ActionType} from './action.js';
-import {films} from '../mocks/films.js';
-import {GENRE_DEFAULT} from '../components/const.js';
+import {AuthorizationStatus, GENRE_DEFAULT} from '../components/const.js';
 
 export const initialState = {
+  films: {
+    data: [],
+    isDataLoaded: false,
+  },
   genre:  GENRE_DEFAULT,
-  films: films,
+  user: {
+    data: null,
+    authorizationStatus: AuthorizationStatus.UNKNOWN,
+  },
 };
 
 export const reducer = (state = initialState, action) => {
@@ -14,11 +20,28 @@ export const reducer = (state = initialState, action) => {
         ...state,
         genre: action.payload,
       };
-    case ActionType.GET_FILMS_LIST:
+    case ActionType.LOAD_FILMS:
       return {
         ...state,
-        GET_FILMS_LIST: state.films,
+        films: {
+          data: action.payload,
+          isDataLoaded: true,
+        },
       };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        user: {
+          authorizationStatus: action.payload.status,
+          data: action.payload.userData,
+        },
+      };
+    case ActionType.LOGOUT: {
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+      };
+    }
     default:
       return state;
   }

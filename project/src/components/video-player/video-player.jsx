@@ -22,7 +22,7 @@ export default function VideoPlayer(props) {
 
   return (
     <div className="small-film-card__image">
-      <video muted src={`${video}`} ref={videoRef} poster={`/img/${prevPoster}`} width="280" height="175"/>
+      <video muted src={video} ref={videoRef} poster={prevPoster} width="280" height="175"/>
     </div>
   );
 }

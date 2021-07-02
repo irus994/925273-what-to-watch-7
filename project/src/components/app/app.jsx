@@ -1,6 +1,6 @@
 import React from 'react';
-import General from '../general/general.jsx';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import General, {isCheckedAuth} from '../general/general.jsx';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import {AppRoute} from '../const.js';
 import AddReview from '../add-review/add-review.jsx';
 import FilmPage from '../film-page/film-page.jsx';
@@ -11,12 +11,22 @@ import NotFoundScreen from '../non-found-screen/non-found-screen.jsx';
 import PropTypes from 'prop-types';
 import {filmPropTypes} from '../films-prop-types.js';
 import {connect} from 'react-redux';
+import LoadingScreen from '../loading-screen/loading-screen';
+import PrivateRoute from '../private-route/private-rout.jsx';
+import {browserHistory} from '../browser-history.js';
+
 
 function App(props) {
-  const {films} = props;
-
+  const {films, authorizationStatus, isDataLoaded} = props;
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen/>
+    );
+  }
+  // eslint-disable-next-line no-console
+  console.log(films);
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
           <General
@@ -27,9 +37,12 @@ function App(props) {
         <Route exact path={AppRoute.SING_IN}>
           <SingIn/>
         </Route>
-        <Route exact path={AppRoute.MY_LIST}>
-          <MyList/>
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.MY_LIST}
+          render={() => <MyList films={films}/>}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoute.FILM}>
           <FilmPage
             filmName={films[0].name}
@@ -38,11 +51,12 @@ function App(props) {
             id={films[0].id}
           />
         </Route>
-        <Route exact path={AppRoute.ADD_REVIEW}>
-          <AddReview
-            filmName={films[0].name}
-          />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.ADD_REVIEW}
+          render={() => <AddReview/>}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoute.PLAYER}>
           <Player
             prevVideo={films[0].video}
@@ -56,15 +70,21 @@ function App(props) {
   );
 }
 
-App.propTypes = {
-  films: PropTypes.arrayOf(filmPropTypes).isRequired,
-};
-
 const mapStateToProps = (state) => (
   {
-    films: state.films,
+    films: state.films.data,
+    authorizationStatus: state.user.authorizationStatus,
+    isDataLoaded: state.films.isDataLoaded,
   }
 );
 
+
+App.propTypes = {
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+};
+
 export {App};
 export default connect(mapStateToProps, null)(App);
+

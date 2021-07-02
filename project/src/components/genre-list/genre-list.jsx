@@ -24,7 +24,7 @@ function GenreList(props) {
 
 const mapStateToProps = (state) => (
   {
-    films: state.films,
+    films: state.films.data,
   }
 );
 
