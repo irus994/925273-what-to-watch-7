@@ -1,17 +1,17 @@
 import React from 'react';
-import General, {isCheckedAuth} from '../general/general.jsx';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {AppRoute} from '../const.js';
+import General, {isCheckedAuth} from '../general/general.jsx';
 import AddReview from '../add-review/add-review.jsx';
 import FilmPage from '../film-page/film-page.jsx';
 import MyList from '../my-list/my-list.jsx';
 import SingIn from '../sing-in/sing-in.jsx';
 import Player from '../player/player.jsx';
 import NotFoundScreen from '../non-found-screen/non-found-screen.jsx';
-import PropTypes from 'prop-types';
 import {filmPropTypes} from '../films-prop-types.js';
-import {connect} from 'react-redux';
-import LoadingScreen from '../loading-screen/loading-screen';
+import LoadingScreen from '../loading-screen/loading-screen.jsх';
 import PrivateRoute from '../private-route/private-rout.jsx';
 import {browserHistory} from '../browser-history.js';
 
@@ -23,8 +23,6 @@ function App(props) {
       <LoadingScreen/>
     );
   }
-  // eslint-disable-next-line no-console
-  console.log(films);
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
