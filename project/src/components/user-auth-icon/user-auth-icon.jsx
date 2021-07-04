@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {AppRoute} from '../const';
+import {getUserStatus} from '../../store/user/selectors';
 
 export function UserAuthIcon(props) {
   const {authorizationStatus, email} = props;
@@ -27,8 +28,8 @@ UserAuthIcon.propTypes = {
 
 const mapStateToProps = (state) => (
   {
-    authorizationStatus: state.user.authorizationStatus,
-    email: state.user.data ? state.user.data.email : undefined,
+    authorizationStatus: getUserStatus(state),
+    email: getUserStatus(state) ? getUserStatus(state).email : undefined,
   }
 );
 

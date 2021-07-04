@@ -11,9 +11,11 @@ import SingIn from '../sing-in/sing-in.jsx';
 import Player from '../player/player.jsx';
 import NotFoundScreen from '../non-found-screen/non-found-screen.jsx';
 import {filmPropTypes} from '../films-prop-types.js';
-import LoadingScreen from '../loading-screen/loading-screen.jsх';
+import LoadingScreen from '../loading-screen/loading-screen.jsx';
 import PrivateRoute from '../private-route/private-rout.jsx';
 import {browserHistory} from '../browser-history.js';
+import {getFilms, getLoadedFilmsStatus} from '../../store/films-data/selectors';
+import {getUserStatus} from '../../store/user/selectors';
 
 
 function App(props) {
@@ -70,9 +72,9 @@ function App(props) {
 
 const mapStateToProps = (state) => (
   {
-    films: state.films.data,
-    authorizationStatus: state.user.authorizationStatus,
-    isDataLoaded: state.films.isDataLoaded,
+    films: getFilms(state),
+    authorizationStatus: getUserStatus(state),
+    isDataLoaded: getLoadedFilmsStatus(state),
   }
 );
 
