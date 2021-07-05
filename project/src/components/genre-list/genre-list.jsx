@@ -5,6 +5,7 @@ import {filmPropTypes} from '../films-prop-types.js';
 import {ActionCreator} from '../../store/action.js';
 import {connect} from 'react-redux';
 import {GENRE_DEFAULT} from '../const.js';
+import {getFilms} from '../../store/films-data/selectors.js';
 
 function GenreList(props) {
   const {films, onChangeGenre} = props;
@@ -22,9 +23,10 @@ function GenreList(props) {
   );
 }
 
+
 const mapStateToProps = (state) => (
   {
-    films: state.films.data,
+    films: getFilms(state),
   }
 );
 

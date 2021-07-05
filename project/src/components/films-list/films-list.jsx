@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import FilmCard from '../film-card/film-card.jsx';
 import {filmPropTypes} from '../films-prop-types.js';
 import {isSelectedGenre} from '../../filter-genre.js';
+import {getFilms} from '../../store/films-data/selectors.js';
+import {getFilmGenre} from '../../store/genre/selectors.js';
 
 function FilmsList(props) {
   const [activeFilm, setActiveFilm] = useState(null);
@@ -33,7 +35,7 @@ function FilmsList(props) {
 
 const mapStateToProps = (state) => (
   {
-    films: isSelectedGenre(state.films.data, state.genre),
+    films: isSelectedGenre(getFilms(state), getFilmGenre(state)),
   }
 );
 
