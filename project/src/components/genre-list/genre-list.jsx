@@ -9,8 +9,6 @@ import {getFilms} from '../../store/films-data/selectors.js';
 
 function GenreList(props) {
   const {films, onChangeGenre} = props;
-  // eslint-disable-next-line no-console
-  console.log(films);
   return (
     <ul className="catalog__genres-list">
       {
