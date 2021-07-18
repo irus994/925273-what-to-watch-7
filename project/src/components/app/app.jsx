@@ -25,6 +25,8 @@ function App(props) {
       <LoadingScreen/>
     );
   }
+  // eslint-disable-next-line no-console
+  console.log(films);
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -44,12 +46,7 @@ function App(props) {
         >
         </PrivateRoute>
         <Route exact path={AppRoute.FILM}>
-          <FilmPage
-            filmName={films[0].name}
-            genre={films[0].genre}
-            year={films[0].year}
-            id={films[0].id}
-          />
+          <FilmPage/>
         </Route>
         <PrivateRoute
           exact

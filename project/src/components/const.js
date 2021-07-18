@@ -24,4 +24,11 @@ export const APIRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   FILMS: '/films',
+  COMMENTS: '/comments/:film_id',
+};
+
+export const tabs = {
+  OVERVIEW: 'OVERVIEW',
+  DETAILS: 'DETAILS',
+  REVIEWS: 'REVIEWS',
 };

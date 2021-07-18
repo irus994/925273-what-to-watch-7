@@ -1,15 +1,28 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Tabs from '../tabs/tabs.jsx';
+import {getComments, getFilms} from '../../store/films-data/selectors';
+import {connect} from 'react-redux';
+import {filmPropTypes} from '../films-prop-types';
+import FilmCard from '../film-card/film-card.jsx';
+import {UserAuthIcon} from '../user-auth-icon/user-auth-icon.jsx';
+import {fetchCommentsList} from '../../store/api-actions';
 
-export default function FilmPage(props) {
-  const {filmName, genre, year, id} = props;
+function FilmPage(props) {
+  const {films, loadComments, comments} = props;
+  const [activeFilm, setActiveFilm] = useState(null);
+  const {id} = useParams();
+  const mainFilm = films.find((film) => film.id === Number(id));
+  useEffect(() => {
+    loadComments(id);
+  }, [id, loadComments]);
   return (
     <>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={{backgroundColor: mainFilm.color}}>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="/img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+            <img src={mainFilm.background} alt={mainFilm.name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -22,25 +35,15 @@ export default function FilmPage(props) {
                 <span className="logo__letter logo__letter--3">W</span>
               </Link>
             </div>
-
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <UserAuthIcon/>
           </header>
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmName}</h2>
+              <h2 className="film-card__title">{mainFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__genre">{mainFilm.genre}</span>
+                <span className="film-card__year">{mainFilm.year}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -56,7 +59,7 @@ export default function FilmPage(props) {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
+                <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -65,51 +68,14 @@ export default function FilmPage(props) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src={mainFilm.poster} alt={mainFilm.name} width="218" height="327"/>
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <Link to="#" className="film-nav__link">Overview</Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to="#" className="film-nav__link">Details</Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to="#" className="film-nav__link">Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge
-                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave &apos; s friend and protege.
-                </p>
-                <p>Gustave prides himself on providing first-class service to the hotel &apos; s guests, including satisfying
-                  the sexual needs of the many elderly women who stay there. When one of Gustave &apos; s lovers dies
-                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her
-                  murder.
-                </p>
-
-                <p className="film-card__director"><strong>Director: Wes Andreson</strong>
-                </p>
-
-                <p className="film-card__starring">
-                  <strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe
-                  and other
-                  </strong>
-                </p>
-              </div>
+              <Tabs
+                film={mainFilm}
+                comments={comments}
+              />
             </div>
           </div>
         </div>
@@ -120,43 +86,23 @@ export default function FilmPage(props) {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="/img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175"/>
-              </div>
-              <h3 className="small-film-card__title">
-                <Link className="small-film-card__link" to="#">Fantastic Beasts: The Crimes of
-                  Grindelwald
-                </Link>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="/img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175"/>
-              </div>
-              <h3 className="small-film-card__title">
-                <Link className="small-film-card__link" to="film-page.html">Bohemian Rhapsody</Link>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="../project/public/img/macbeth.jpg" alt="Macbeth" width="280" height="175"/>
-              </div>
-              <h3 className="small-film-card__title">
-                <Link className="small-film-card__link" to="film-page.html">Macbeth</Link>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="../project/public/img/aviator.jpg" alt="Aviator" width="280" height="175"/>
-              </div>
-              <h3 className="small-film-card__title">
-                <Link className="small-film-card__link" to="film-page.html">Aviator</Link>
-              </h3>
-            </article>
+            {
+              films.filter((film) => mainFilm.genre === film.genre).slice(0, 4).map((film) => (
+                <FilmCard
+                  onPointerEnter={() => {
+                    setActiveFilm(film);
+                  }}
+                  onPointerLeave={() => {
+                    setActiveFilm(null);
+                  }}
+                  key={film.id}
+                  filmName={film.name}
+                  id={film.id}
+                  prevPoster={film.prevPoster}
+                  video={film.video}
+                  isActive={activeFilm === film}
+                />))
+            }
           </div>
         </section>
 
@@ -179,8 +125,24 @@ export default function FilmPage(props) {
 }
 
 FilmPage.propTypes = {
-  filmName: PropTypes.string.isRequired,
-  year: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
+  loadComments: PropTypes.func.isRequired,
+  comments: PropTypes.array.isRequired,
 };
+
+const mapStateToProps = (state) => (
+  {
+    films: getFilms(state),
+    comments: getComments(state),
+  }
+);
+
+
+const mapDispatchToProps = (dispatch) => ({
+  loadComments: (filmId) => {
+    dispatch(fetchCommentsList(filmId));
+  },
+});
+
+export {FilmPage};
+export default connect(mapStateToProps, mapDispatchToProps)(FilmPage);

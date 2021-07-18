@@ -40,7 +40,6 @@ export default function General(props) {
                 <span className="film-card__genre">{topFilm.genre}</span>
                 <span className="film-card__year">{topFilm.year}</span>
               </p>
-
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
@@ -68,10 +67,6 @@ export default function General(props) {
           <FilmsList
             films={films}
           />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
         </section>
 
         <footer className="page-footer">

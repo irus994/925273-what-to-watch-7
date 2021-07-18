@@ -9,6 +9,12 @@ export const fetchFilmsList = () => (dispatch, _getState, api) => (
     .then((response) => dispatch(ActionCreator.loadFilms(response)))
 );
 
+export const fetchCommentsList = (filmId) => (dispatch, _getState, api) => (
+  api.get(APIRoute.COMMENTS.replace(':film_id', filmId))
+    .then((response) => response.data)
+    .then((response) => dispatch(ActionCreator.loadComments(response)))
+);
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
     .then((response) => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH, response.data)))

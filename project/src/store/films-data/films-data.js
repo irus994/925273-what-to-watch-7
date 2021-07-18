@@ -5,6 +5,10 @@ export const initialState = {
     data: [],
     isDataLoaded: false,
   },
+  comments: {
+    data: [],
+    isDataLoaded: false,
+  },
 };
 
 export const filmData = (state = initialState, action) => {
@@ -13,6 +17,14 @@ export const filmData = (state = initialState, action) => {
       return {
         ...state,
         films: {
+          data: action.payload,
+          isDataLoaded: true,
+        },
+      };
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        comments: {
           data: action.payload,
           isDataLoaded: true,
         },

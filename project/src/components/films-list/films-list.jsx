@@ -6,30 +6,46 @@ import {filmPropTypes} from '../films-prop-types.js';
 import {isSelectedGenre} from '../../filter-genre.js';
 import {getFilms} from '../../store/films-data/selectors.js';
 import {getFilmGenre} from '../../store/genre/selectors.js';
+import ShowMoreButton from '../show-more-button/show-more-button';
+
+const PAGE_SIZE = 8;
 
 function FilmsList(props) {
   const [activeFilm, setActiveFilm] = useState(null);
+  const [showedFilmsCount, setShowedFilmsCount] = useState(PAGE_SIZE);
   const {films} = props;
   return (
-    <div className="catalog__films-list">
+    <>
+      <div className="catalog__films-list">
+        {
+          films.slice(0, showedFilmsCount).map((film) => (
+            <FilmCard
+              onPointerEnter={() => {
+                setActiveFilm(film);
+              }}
+              onPointerLeave={() => {
+                setActiveFilm(null);
+              }}
+              key={film.id}
+              filmName={film.name}
+              id={film.id}
+              prevPoster={film.prevPoster}
+              video={film.video}
+              isActive={activeFilm === film}
+            />))
+        }
+      </div>
       {
-        films.map((film) => (
-          <FilmCard
-            onPointerEnter={() => {
-              setActiveFilm(film);
+        films.length > showedFilmsCount && (
+          <ShowMoreButton
+            onClick={(evt) => {
+              evt.preventDefault();
+              setShowedFilmsCount(showedFilmsCount + PAGE_SIZE);
             }}
-            onPointerLeave={() => {
-              setActiveFilm(null);
-            }}
-            key={film.id}
-            filmName={film.name}
-            id={film.id}
-            prevPoster={film.prevPoster}
-            video={film.video}
-            isActive={activeFilm === film}
-          />))
+          />
+        )
       }
-    </div>
+    </>
   );
 }
 
