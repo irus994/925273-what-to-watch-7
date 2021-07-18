@@ -5,6 +5,7 @@ import Tabs from '../tabs/tabs.jsx';
 import {getComments, getFilms} from '../../store/films-data/selectors';
 import {connect} from 'react-redux';
 import {filmPropTypes} from '../films-prop-types';
+import {commentsPropTypes} from '../comments-prop-types.js';
 import FilmCard from '../film-card/film-card.jsx';
 import {UserAuthIcon} from '../user-auth-icon/user-auth-icon.jsx';
 import {fetchCommentsList} from '../../store/api-actions';
@@ -127,7 +128,7 @@ function FilmPage(props) {
 FilmPage.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
   loadComments: PropTypes.func.isRequired,
-  comments: PropTypes.array.isRequired,
+  comments: PropTypes.arrayOf(commentsPropTypes).isRequired,
 };
 
 const mapStateToProps = (state) => (
