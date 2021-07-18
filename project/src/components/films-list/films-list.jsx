@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import FilmCard from '../film-card/film-card.jsx';
@@ -11,9 +11,12 @@ import ShowMoreButton from '../show-more-button/show-more-button';
 const PAGE_SIZE = 8;
 
 function FilmsList(props) {
+  const {films} = props;
   const [activeFilm, setActiveFilm] = useState(null);
   const [showedFilmsCount, setShowedFilmsCount] = useState(PAGE_SIZE);
-  const {films} = props;
+  useEffect(() => {
+    setShowedFilmsCount(PAGE_SIZE);
+  }, [films]);
   return (
     <>
       <div className="catalog__films-list">
