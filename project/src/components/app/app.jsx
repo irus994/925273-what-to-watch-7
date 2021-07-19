@@ -20,8 +20,6 @@ import {getUserStatus} from '../../store/user/selectors';
 
 function App(props) {
   const {films, authorizationStatus, isDataLoaded, favoriteFilms} = props;
-  // eslint-disable-next-line no-console
-  console.log(favoriteFilms);
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen/>
