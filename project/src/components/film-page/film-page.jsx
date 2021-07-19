@@ -8,10 +8,11 @@ import {filmPropTypes} from '../films-prop-types';
 import {commentsPropTypes} from '../comments-prop-types.js';
 import FilmCard from '../film-card/film-card.jsx';
 import {UserAuthIcon} from '../user-auth-icon/user-auth-icon.jsx';
-import {fetchCommentsList} from '../../store/api-actions';
+import {fetchCommentsList, toggleFavorite} from '../../store/api-actions';
+import {getUserStatus} from '../../store/user/selectors';
 
 function FilmPage(props) {
-  const {films, loadComments, comments} = props;
+  const {films, loadComments, comments, authorizationStatus, onAddFavoriteClick} = props;
   const [activeFilm, setActiveFilm] = useState(null);
   const {id} = useParams();
   const mainFilm = films.find((film) => film.id === Number(id));
@@ -36,7 +37,9 @@ function FilmPage(props) {
                 <span className="logo__letter logo__letter--3">W</span>
               </Link>
             </div>
-            <UserAuthIcon/>
+            <UserAuthIcon
+              authorizationStatus={authorizationStatus}
+            />
           </header>
 
           <div className="film-card__wrap">
@@ -54,13 +57,22 @@ function FilmPage(props) {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+                <button
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    onAddFavoriteClick(mainFilm.id, !mainFilm.isMyList);
+                  }}
+                  className="btn btn--list film-card__button"
+                  type="button"
+                >
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
+                    <use xlinkHref={mainFilm.isMyList ? '#in-list' : '#add'}></use>
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">Add review</Link>
+                {
+                  authorizationStatus === 'AUTH' && <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">Add review</Link>
+                }
               </div>
             </div>
           </div>
@@ -129,12 +141,15 @@ FilmPage.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
   loadComments: PropTypes.func.isRequired,
   comments: PropTypes.arrayOf(commentsPropTypes).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  onAddFavoriteClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => (
   {
     films: getFilms(state),
     comments: getComments(state),
+    authorizationStatus: getUserStatus(state),
   }
 );
 
@@ -142,6 +157,9 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => ({
   loadComments: (filmId) => {
     dispatch(fetchCommentsList(filmId));
+  },
+  onAddFavoriteClick: (filmId, status) => {
+    dispatch(toggleFavorite(filmId, status));
   },
 });
 

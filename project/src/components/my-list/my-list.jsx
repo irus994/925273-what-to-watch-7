@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import FilmCard from '../film-card/film-card';
 import PropTypes from 'prop-types';
 import {filmPropTypes} from '../films-prop-types';
+import {getFavoriteFilms} from '../../store/films-data/selectors';
+import {connect} from 'react-redux';
+import {fetchFavoriteFilmsList} from '../../store/api-actions';
 
-export default function MyList (props) {
-  const {films} = props;
+function MyList (props) {
+  const {films, loadFavoriteFilms} = props;
+  useEffect(() => {
+    loadFavoriteFilms();
+  }, [loadFavoriteFilms]);
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -36,7 +42,7 @@ export default function MyList (props) {
 
         <div className="catalog__films-list">
           {
-            films.filter((film) => film.isMyList).map((film) => (
+            films.map((film) => (
               <FilmCard
                 key={film.name}
                 filmName={film.name}
@@ -67,4 +73,21 @@ export default function MyList (props) {
 
 MyList.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
+  loadFavoriteFilms: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => (
+  {
+    films: getFavoriteFilms(state),
+  }
+);
+
+const mapDispatchToProps = (dispatch) => ({
+  loadFavoriteFilms: () => {
+    dispatch(fetchFavoriteFilmsList());
+  },
+});
+
+
+export {MyList};
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);

@@ -24,6 +24,8 @@ export const APIRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   FILMS: '/films',
+  FAVORITE_FILMS: '/favorite',
+  TOGGLE_FAVORITE_FILMS: 'favorite/:film_id/:status',
   COMMENTS: '/comments/:film_id',
 };
 

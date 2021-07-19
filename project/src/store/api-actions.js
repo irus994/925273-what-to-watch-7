@@ -9,6 +9,18 @@ export const fetchFilmsList = () => (dispatch, _getState, api) => (
     .then((response) => dispatch(ActionCreator.loadFilms(response)))
 );
 
+export const fetchFavoriteFilmsList = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVORITE_FILMS)
+    .then((response) => response.data.map((film) => adaptToClient(film)))//запрос для получения списка фильмов
+    .then((response) => dispatch(ActionCreator.loadFavoriteFilms(response)))
+);
+
+export const toggleFavorite = (filmId, status) => (dispatch, _getState, api) => (
+  api.post(APIRoute.TOGGLE_FAVORITE_FILMS.replace(':film_id', filmId).replace(':status', Number(status)))
+    .then((response) => adaptToClient(response.data))
+    .then((response) => dispatch(ActionCreator.updateFilm(response)))
+);
+
 export const fetchCommentsList = (filmId) => (dispatch, _getState, api) => (
   api.get(APIRoute.COMMENTS.replace(':film_id', filmId))
     .then((response) => response.data)

@@ -14,19 +14,19 @@ import {filmPropTypes} from '../films-prop-types.js';
 import LoadingScreen from '../loading-screen/loading-screen.jsx';
 import PrivateRoute from '../private-route/private-rout.jsx';
 import {browserHistory} from '../browser-history.js';
-import {getFilms, getLoadedFilmsStatus} from '../../store/films-data/selectors';
+import {getFavoriteFilms, getFilms, getLoadedFilmsStatus} from '../../store/films-data/selectors';
 import {getUserStatus} from '../../store/user/selectors';
 
 
 function App(props) {
-  const {films, authorizationStatus, isDataLoaded} = props;
+  const {films, authorizationStatus, isDataLoaded, favoriteFilms} = props;
+  // eslint-disable-next-line no-console
+  console.log(favoriteFilms);
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen/>
     );
   }
-  // eslint-disable-next-line no-console
-  console.log(films);
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -42,7 +42,7 @@ function App(props) {
         <PrivateRoute
           exact
           path={AppRoute.MY_LIST}
-          render={() => <MyList films={films}/>}
+          render={() => <MyList films={favoriteFilms}/>}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.FILM}>
@@ -72,12 +72,14 @@ const mapStateToProps = (state) => (
     films: getFilms(state),
     authorizationStatus: getUserStatus(state),
     isDataLoaded: getLoadedFilmsStatus(state),
+    favoriteFilms: getFavoriteFilms(state),
   }
 );
 
 
 App.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
+  favoriteFilms: PropTypes.arrayOf(filmPropTypes).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
 };
