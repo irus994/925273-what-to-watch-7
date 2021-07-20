@@ -26,5 +26,5 @@ FilmCard.propTypes = {
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
   video: PropTypes.string.isRequired,
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
 };

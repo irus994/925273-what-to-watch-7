@@ -33,7 +33,7 @@ export default function TabsOverview(props) {
 TabsOverview.propTypes = {
   description: PropTypes.string.isRequired,
   director: PropTypes.string.isRequired,
-  starring: PropTypes.array.isRequired,
+  starring: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
   scoresCount: PropTypes.number.isRequired,
 };

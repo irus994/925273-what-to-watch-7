@@ -25,7 +25,7 @@ export function UserAuthIcon(props) {
 
 UserAuthIcon.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  email: PropTypes.string,
 };
 
 const mapStateToProps = (state) => (

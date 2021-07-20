@@ -1,13 +1,17 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import FilmsList from '../films-list/films-list.jsx';
 import {filmPropTypes} from '../films-prop-types.js';
 import GenreList from '../genre-list/genre-list.jsx';
 import {AuthorizationStatus} from '../const.js';
 import UserAuthIcon from '../user-auth-icon/user-auth-icon.jsx';
+import {toggleFavorite} from '../../store/api-actions';
+import {connect} from 'react-redux';
+import {getFilms} from '../../store/films-data/selectors';
+import {getUserStatus} from '../../store/user/selectors';
 
-export default function General(props) {
-  const {films, topFilm} = props;
+function General(props) {
+  const {films, topFilm, onAddFavoriteClick} = props;
   return (
     <>
       <section className="film-card">
@@ -47,9 +51,16 @@ export default function General(props) {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+                <button
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    onAddFavoriteClick(topFilm.id, !topFilm.isMyList);
+                  }}
+                  className="btn btn--list film-card__button"
+                  type="button"
+                >
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add" />
+                    <use xlinkHref={topFilm.isMyList ? '#in-list' : '#add'}></use>
                   </svg>
                   <span>My list</span>
                 </button>
@@ -93,5 +104,21 @@ export const isCheckedAuth = (authorizationStatus) =>
 General.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
   topFilm: filmPropTypes,
+  onAddFavoriteClick: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => (
+  {
+    films: getFilms(state),
+    authorizationStatus: getUserStatus(state),
+  }
+);
+
+const mapDispatchToProps = (dispatch) => ({
+  onAddFavoriteClick: (filmId, status) => {
+    dispatch(toggleFavorite(filmId, status));
+  },
+});
+
+export {General};
+export default connect(mapStateToProps, mapDispatchToProps)(General);

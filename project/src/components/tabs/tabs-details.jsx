@@ -38,7 +38,7 @@ export default function TabsDetails(props) {
 TabsDetails.propTypes = {
   filmReleased: PropTypes.string.isRequired,
   director: PropTypes.string.isRequired,
-  starring: PropTypes.array.isRequired,
-  runTime: PropTypes.string.isRequired,
+  starring: PropTypes.string.isRequired,
+  runTime: PropTypes.number.isRequired,
   genre: PropTypes.string.isRequired,
 };

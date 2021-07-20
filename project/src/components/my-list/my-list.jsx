@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import FilmCard from '../film-card/film-card';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ import {fetchFavoriteFilmsList} from '../../store/api-actions';
 
 function MyList (props) {
   const {films, loadFavoriteFilms} = props;
+  const [activeFilm, setActiveFilm] = useState(null);
   useEffect(() => {
     loadFavoriteFilms();
   }, [loadFavoriteFilms]);
@@ -44,11 +45,18 @@ function MyList (props) {
           {
             films.map((film) => (
               <FilmCard
-                key={film.name}
+                onPointerEnter={() => {
+                  setActiveFilm(film);
+                }}
+                onPointerLeave={() => {
+                  setActiveFilm(null);
+                }}
+                key={film.id}
                 filmName={film.name}
-                prevVideo={film.video}
                 id={film.id}
                 prevPoster={film.prevPoster}
+                video={film.video}
+                isActive={activeFilm === film}
               />))
           }
         </div>
