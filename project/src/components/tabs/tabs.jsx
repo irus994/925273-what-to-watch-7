@@ -9,19 +9,22 @@ import PropTypes from 'prop-types';
 export default function Tabs(props) {
   const {film, comments} = props;
   const [activeTab, setActiveTab] = useState(tabs.OVERVIEW);
+  const pageTabs = [
+    {text: 'Overview', data: 'OVERVIEW'},
+    {text: 'Details', data: 'DETAILS'},
+    {text: 'Reviews', data: 'REVIEWS'},
+  ];
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
-          <li onClick={() => setActiveTab(tabs.OVERVIEW)} className={`${activeTab === tabs.OVERVIEW ? 'film-nav__item  film-nav__item--active' : 'film-nav__item'}`}>
-            <Link to="#" className="film-nav__link">Overview</Link>
-          </li>
-          <li onClick={() => setActiveTab(tabs.DETAILS)} className={`${activeTab === tabs.DETAILS ? 'film-nav__item  film-nav__item--active' : 'film-nav__item'}`}>
-            <Link to="#" className="film-nav__link">Details</Link>
-          </li>
-          <li onClick={() => setActiveTab(tabs.REVIEWS)} className={`${activeTab === tabs.REVIEWS ? 'film-nav__item  film-nav__item--active' : 'film-nav__item'}`}>
-            <Link to="#" className="film-nav__link">Reviews</Link>
-          </li>
+          {
+            pageTabs.map((pageTab) => (
+              <li key={pageTab.text} onClick={() => setActiveTab(pageTab.data)} className={`${activeTab === pageTab.data ? 'film-nav__item  film-nav__item--active' : 'film-nav__item'}`}>
+                <Link to="#" className="film-nav__link">{pageTab.text}</Link>
+              </li>
+            ))
+          }
         </ul>
       </nav>
       {activeTab === tabs.OVERVIEW && (
