@@ -25,3 +25,14 @@ export const getHour = (allMinutes) => {
     return `${allMinutes}m`;
   }
 };
+
+export const gerHoursForPlayer = (allSeconds) => {
+  const hour = (allSeconds / 60 / 60).toFixed(0);
+  const minutes = ((allSeconds / 60) % 60).toFixed(0);
+  const seconds = (allSeconds % 60).toFixed(0);
+  if (allSeconds / 60 > 59) {
+    return `-${hour}:${minutes}:${seconds}`;
+  } else {
+    return `-${minutes}:${seconds}`;
+  }
+};

@@ -8,4 +8,4 @@ export const filmPropTypes = PropTypes.shape({
   year: PropTypes.string.isRequired,
   prevPoster: PropTypes.string.isRequired,
   isMyList: PropTypes.bool.isRequired,
-}).isRequired;
+});

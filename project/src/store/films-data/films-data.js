@@ -9,6 +9,14 @@ export const initialState = {
     data: [],
     isDataLoaded: false,
   },
+  isSimilar: {
+    data: [],
+    isDataLoaded: false,
+  },
+  promoFilm: {
+    data: undefined,
+    isDataLoaded: false,
+  },
   comments: {
     data: [],
     isDataLoaded: false,
@@ -43,6 +51,24 @@ export const filmData = (state = initialState, action) => {
       return {
         ...state,
         isMyList: {
+          data: action.payload,
+          isDataLoaded: true,
+        },
+      };
+    }
+    case ActionType.LOAD_SIMILAR_FILMS: {
+      return {
+        ...state,
+        isSimilar: {
+          data: action.payload,
+          isDataLoaded: true,
+        },
+      };
+    }
+    case ActionType.UPDATE_PROMO_FILM: {
+      return {
+        ...state,
+        promoFilm: {
           data: action.payload,
           isDataLoaded: true,
         },

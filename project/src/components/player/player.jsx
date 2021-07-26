@@ -1,25 +1,42 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
+import {useParams} from 'react-router-dom';
+import {filmPropTypes} from '../films-prop-types';
+import {getFilms} from '../../store/films-data/selectors';
+import {connect} from 'react-redux';
+import {gerHoursForPlayer} from '../utils';
 
-export default function Player (props) {
-  const {prevVideo} = props;
+function Player (props) {
+  const {films} = props;
+  const videoRef = useRef(null);
+  const {id} = useParams();
+  const mainFilm = films.find((film) => film.id === Number(id));
+  const [remainingTime, setRemainingTime] = useState(mainFilm.runTime * 60);
   return (
     <div className="player">
-      <video src={prevVideo} className="player__video" poster="/img/player-poster.jpg"></video>
+      <video
+        onClick={() => videoRef.current.paused ? videoRef.current.play() : videoRef.current.pause()} src={mainFilm.fullVideo}
+        ref={videoRef}
+        className="player__video"
+        poster={mainFilm.background}
+        onTimeUpdate={() => {
+          setRemainingTime(mainFilm.runTime * 60 - Math.floor(videoRef.current.currentTime));
+        }}
+      />
 
       <button type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{marginleft: '30%'}}>Toggler</div>
+            <progress className="player__progress" value={((1 - (remainingTime / (mainFilm.runTime * 60))) * 100).toFixed(0)} max="100"></progress>
+            <div className="player__toggler" style={{left: `${((1 - (remainingTime / (mainFilm.runTime * 60))) * 100).toFixed(0)}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{gerHoursForPlayer(remainingTime)}</div>
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play">
+          <button onClick={() => videoRef.current.paused ? videoRef.current.play() : videoRef.current.pause()} type="button" className="player__play">
             <svg viewBox="0 0 19 19" width="19" height="19">
               <use xlinkHref="#play-s"></use>
             </svg>
@@ -27,7 +44,14 @@ export default function Player (props) {
           </button>
           <div className="player__name">Transpotting</div>
 
-          <button type="button" className="player__full-screen">
+          <button
+            onClick={(evt) => {
+              evt.preventDefault();
+              videoRef.current.requestFullscreen();
+            }}
+            type="button"
+            className="player__full-screen"
+          >
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>
@@ -40,5 +64,15 @@ export default function Player (props) {
 }
 
 Player.propTypes = {
-  prevVideo: PropTypes.string.isRequired,
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
 };
+
+const mapStateToProps = (state) => (
+  {
+    films: getFilms(state),
+  }
+);
+
+export {Player};
+export default connect(mapStateToProps)(Player);
+

@@ -24,9 +24,12 @@ export const APIRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   FILMS: '/films',
+  PROMO_FILM: '/promo',
+  SIMILAR_FILM: '/films/:id/similar',
   FAVORITE_FILMS: '/favorite',
   TOGGLE_FAVORITE_FILMS: 'favorite/:film_id/:status',
   COMMENTS: '/comments/:film_id',
+  ADD_COMMENT: '/comments/:film_id',
 };
 
 export const tabs = {

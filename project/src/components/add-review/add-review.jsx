@@ -1,15 +1,20 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AddReviewForm from '../review-form/review-form.jsx';
+import {filmPropTypes} from '../films-prop-types';
+import {getFilms} from '../../store/films-data/selectors';
+import {connect} from 'react-redux';
 
-export default function AddReview(props) {
-  const {filmName} = props;
+function AddReview(props) {
+  const {films} = props;
+  const {id} = useParams();
+  const mainFilm = films.find((film) => film.id === Number(id));
   return (
-    <section className="film-card film-card--full">
+    <section style={{backgroundColor: mainFilm.color}} className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src="/img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+          <img src={mainFilm.background} alt={mainFilm.name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -26,7 +31,7 @@ export default function AddReview(props) {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to="#" className="breadcrumbs__link">{filmName}</Link>
+                <Link to="#" className="breadcrumbs__link">{mainFilm.filmName}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -47,7 +52,7 @@ export default function AddReview(props) {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src="/img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+          <img src={mainFilm.poster} alt={mainFilm.name} width="218" height="327"/>
         </div>
       </div>
 
@@ -60,5 +65,14 @@ export default function AddReview(props) {
 }
 
 AddReview.propTypes = {
-  filmName: PropTypes.string.isRequired,
+  films: PropTypes.arrayOf(filmPropTypes).isRequired,
 };
+
+const mapStateToProps = (state) => (
+  {
+    films: getFilms(state),
+  }
+);
+
+export {AddReview};
+export default connect(mapStateToProps)(AddReview);

@@ -21,7 +21,10 @@ export const user = (state = initialState, action) => {
     case ActionType.LOGOUT: {
       return {
         ...state,
-        authorizationStatus: AuthorizationStatus.NO_AUTH,
+        user: {
+          authorizationStatus: AuthorizationStatus.NO_AUTH,
+          data: null,
+        },
       };
     }
     default:

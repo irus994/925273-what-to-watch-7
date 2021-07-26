@@ -19,7 +19,7 @@ import {getUserStatus} from '../../store/user/selectors';
 
 
 function App(props) {
-  const {films, authorizationStatus, isDataLoaded, favoriteFilms} = props;
+  const {authorizationStatus, isDataLoaded, favoriteFilms} = props;
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen/>
@@ -29,10 +29,7 @@ function App(props) {
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <General
-            topFilm={films[0]}
-            films={films}
-          />
+          <General/>
         </Route>
         <Route exact path={AppRoute.SING_IN}>
           <SingIn/>
@@ -53,9 +50,7 @@ function App(props) {
         >
         </PrivateRoute>
         <Route exact path={AppRoute.PLAYER}>
-          <Player
-            prevVideo={films[0].video}
-          />
+          <Player/>
         </Route>
         <Route>
           <NotFoundScreen/>
@@ -76,7 +71,6 @@ const mapStateToProps = (state) => (
 
 
 App.propTypes = {
-  films: PropTypes.arrayOf(filmPropTypes).isRequired,
   favoriteFilms: PropTypes.arrayOf(filmPropTypes).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,

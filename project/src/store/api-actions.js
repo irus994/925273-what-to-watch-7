@@ -9,16 +9,35 @@ export const fetchFilmsList = () => (dispatch, _getState, api) => (
     .then((response) => dispatch(ActionCreator.loadFilms(response)))
 );
 
+export const fetchPromoFilm = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.PROMO_FILM)
+    .then((response) => adaptToClient(response.data))
+    .then((response) => dispatch(ActionCreator.loadPromoFilm(response.id)))
+);
+
 export const fetchFavoriteFilmsList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FAVORITE_FILMS)
     .then((response) => response.data.map((film) => adaptToClient(film)))//запрос для получения списка фильмов
     .then((response) => dispatch(ActionCreator.loadFavoriteFilms(response)))
 );
 
+export const fetchSimilarFilmsList = (filmId) => (dispatch, _getState, api) => (
+  api.get(APIRoute.SIMILAR_FILM.replace(':id', filmId))
+    .then((response) => response.data.map((film) => adaptToClient(film)))//запрос для получения списка фильмов
+    .then((response) => dispatch(ActionCreator.loadSimilarFilms(response)))
+);
+
 export const toggleFavorite = (filmId, status) => (dispatch, _getState, api) => (
   api.post(APIRoute.TOGGLE_FAVORITE_FILMS.replace(':film_id', filmId).replace(':status', Number(status)))
     .then((response) => adaptToClient(response.data))
     .then((response) => dispatch(ActionCreator.updateFilm(response)))
+);
+
+export const addComment = (filmId, userRating, commentText) => (dispatch, _getState, api) => (
+  api.post(APIRoute.ADD_COMMENT.replace(':film_id', filmId), {rating: userRating, comment: commentText})
+    .then((response) => response.data)
+    .then((response) => dispatch(ActionCreator.addFilmComments(response)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.FILM.replace(':id', filmId))))
 );
 
 export const fetchCommentsList = (filmId) => (dispatch, _getState, api) => (

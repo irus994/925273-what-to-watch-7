@@ -12,7 +12,7 @@ function GenreList(props) {
   return (
     <ul className="catalog__genres-list">
       {
-        [...new Set([GENRE_DEFAULT, ...films.map((film) => film.genre)])].map((genre) => (
+        [...new Set([GENRE_DEFAULT, ...films.map((film) => film.genre).slice(0, 8)])].map((genre) => (
           <Genre
             key={genre}
             name={genre}

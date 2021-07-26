@@ -6,6 +6,7 @@ export function adaptToClient(movie) {
     {
       prevPoster: movie.preview_image,
       video: movie.preview_video_link,
+      fullVideo: movie.video_link,
       year: movie.released.toString(),
       isMyList: movie.is_favorite,
       poster: movie.poster_image,

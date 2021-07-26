@@ -2,23 +2,26 @@ import React, {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Tabs from '../tabs/tabs.jsx';
-import {getComments, getFilms} from '../../store/films-data/selectors';
+import {getComments, getFilms, getSimilarFilms} from '../../store/films-data/selectors';
 import {connect} from 'react-redux';
 import {filmPropTypes} from '../films-prop-types';
 import {commentsPropTypes} from '../comments-prop-types.js';
 import FilmCard from '../film-card/film-card.jsx';
-import {UserAuthIcon} from '../user-auth-icon/user-auth-icon.jsx';
-import {fetchCommentsList, toggleFavorite} from '../../store/api-actions';
+import UserAuthIcon from '../user-auth-icon/user-auth-icon.jsx';
+import {fetchCommentsList, fetchSimilarFilmsList, toggleFavorite} from '../../store/api-actions';
 import {getUserStatus} from '../../store/user/selectors';
+import {AppRoute} from '../const';
+import {ActionCreator} from '../../store/action';
 
 function FilmPage(props) {
-  const {films, loadComments, comments, authorizationStatus, onAddFavoriteClick} = props;
+  const {films, similarFilms, loadComments, comments, authorizationStatus, onAddFavoriteClick, onPlayFilm, loadSimilarFilms} = props;
   const [activeFilm, setActiveFilm] = useState(null);
   const {id} = useParams();
   const mainFilm = films.find((film) => film.id === Number(id));
   useEffect(() => {
     loadComments(id);
-  }, [id, loadComments]);
+    loadSimilarFilms(id);
+  }, [id, loadComments, loadSimilarFilms]);
   return (
     <>
       <section className="film-card film-card--full" style={{backgroundColor: mainFilm.color}}>
@@ -37,9 +40,7 @@ function FilmPage(props) {
                 <span className="logo__letter logo__letter--3">W</span>
               </Link>
             </div>
-            <UserAuthIcon
-              authorizationStatus={authorizationStatus}
-            />
+            <UserAuthIcon />
           </header>
 
           <div className="film-card__wrap">
@@ -51,7 +52,14 @@ function FilmPage(props) {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button
+                  className="btn btn--play film-card__button"
+                  type="button"
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    onPlayFilm(mainFilm.id);
+                  }}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -100,7 +108,7 @@ function FilmPage(props) {
 
           <div className="catalog__films-list">
             {
-              films.filter((film) => mainFilm.genre === film.genre).slice(0, 4).map((film) => (
+              similarFilms.slice(0, 4).map((film) => (
                 <FilmCard
                   onPointerEnter={() => {
                     setActiveFilm(film);
@@ -143,6 +151,9 @@ FilmPage.propTypes = {
   comments: PropTypes.arrayOf(commentsPropTypes).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   onAddFavoriteClick: PropTypes.func.isRequired,
+  similarFilms: PropTypes.arrayOf(filmPropTypes).isRequired,
+  onPlayFilm: PropTypes.func.isRequired,
+  loadSimilarFilms: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => (
@@ -150,6 +161,7 @@ const mapStateToProps = (state) => (
     films: getFilms(state),
     comments: getComments(state),
     authorizationStatus: getUserStatus(state),
+    similarFilms: getSimilarFilms(state),
   }
 );
 
@@ -160,6 +172,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onAddFavoriteClick: (filmId, status) => {
     dispatch(toggleFavorite(filmId, status));
+  },
+  loadSimilarFilms: (filmId) => {
+    dispatch(fetchSimilarFilmsList(filmId));
+  },
+  onPlayFilm: (filmId) => {
+    dispatch(ActionCreator.redirectToRoute(AppRoute.PLAYER.replace(':id', filmId)));
   },
 });
 

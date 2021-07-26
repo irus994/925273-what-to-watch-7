@@ -3,10 +3,11 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {AppRoute} from '../const';
-import {getUserStatus} from '../../store/user/selectors';
+import {getUser, getUserStatus} from '../../store/user/selectors';
+import {logout as logoutAction} from '../../store/api-actions';
 
 export function UserAuthIcon(props) {
-  const {authorizationStatus, email} = props;
+  const {authorizationStatus, logout} = props;
   return (
     <ul className="user-block">
       <li className="user-block__item">
@@ -17,7 +18,9 @@ export function UserAuthIcon(props) {
         </div>
       </li>
       <li className="user-block__item">
-        <Link to={authorizationStatus === 'AUTH' ? `mailto:${email}` : AppRoute.SING_IN} className="user-block__link">{authorizationStatus === 'AUTH' ? email : 'Sign In'}</Link>
+        {authorizationStatus === 'AUTH'
+          ? (<a onClick={() => logout()} className="user-block__link">Sign Out</a>)
+          : (<Link to={AppRoute.SING_IN} className="user-block__link">Sign In</Link>)}
       </li>
     </ul>
   );
@@ -25,15 +28,21 @@ export function UserAuthIcon(props) {
 
 UserAuthIcon.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  email: PropTypes.string,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => (
   {
     authorizationStatus: getUserStatus(state),
-    email: getUserStatus(state) ? getUserStatus(state).email : undefined,
+    email: getUser(state) ? getUser(state).email : undefined,
   }
 );
 
-export default connect(mapStateToProps, null)(UserAuthIcon);
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => {
+    dispatch(logoutAction());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserAuthIcon);
 

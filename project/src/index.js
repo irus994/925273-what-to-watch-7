@@ -9,7 +9,7 @@ import App from './components/app/app';
 import rootReducer from './store/root-reducer.js';
 import {ActionCreator} from './store/action';
 import {AuthorizationStatus} from './components/const';
-import {checkAuth, fetchFilmsList} from './store/api-actions';
+import {checkAuth, fetchFilmsList, fetchPromoFilm} from './store/api-actions';
 import {redirect} from './store/middlewares/redirect';
 
 
@@ -27,6 +27,7 @@ const store = createStore(
 
 store.dispatch(checkAuth());
 store.dispatch(fetchFilmsList());
+store.dispatch(fetchPromoFilm());
 
 ReactDOM.render(
   <React.StrictMode>
