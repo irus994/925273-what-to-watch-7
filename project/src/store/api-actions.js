@@ -1,7 +1,7 @@
 import {AppRoute} from '../components/const.js';
 import {ActionCreator} from './action';
 import {AuthorizationStatus, APIRoute} from '../components/const.js';
-import {adaptToClient} from '../components/adapt.js';
+import {adaptToClient, adaptUserDataToClient} from '../components/adapt.js';
 
 export const fetchFilmsList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FILMS)
@@ -48,7 +48,7 @@ export const fetchCommentsList = (filmId) => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then((response) => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH, response.data)))
+    .then((response) => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH, adaptUserDataToClient(response.data))))
     .catch(() => {})
 );
 
@@ -58,7 +58,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
       localStorage.setItem('token', data.token);
       return data;
     })
-    .then((data) => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH, data)))
+    .then((data) => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH, adaptUserDataToClient(data))))
     .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
 );
 

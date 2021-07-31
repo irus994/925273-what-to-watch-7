@@ -6,6 +6,7 @@ import {filmPropTypes} from '../films-prop-types';
 import {getFavoriteFilms} from '../../store/films-data/selectors';
 import {connect} from 'react-redux';
 import {fetchFavoriteFilmsList} from '../../store/api-actions';
+import UserAuthIcon from '../user-auth-icon/user-auth-icon.jsx';
 
 function MyList (props) {
   const {films, loadFavoriteFilms} = props;
@@ -25,17 +26,7 @@ function MyList (props) {
         </div>
 
         <h1 className="page-title user-page__title">My list</h1>
-
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-            </div>
-          </li>
-          <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
-          </li>
-        </ul>
+        <UserAuthIcon/>
       </header>
 
       <section className="catalog">

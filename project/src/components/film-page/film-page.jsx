@@ -14,7 +14,17 @@ import {AppRoute} from '../const';
 import {ActionCreator} from '../../store/action';
 
 function FilmPage(props) {
-  const {films, similarFilms, loadComments, comments, authorizationStatus, onAddFavoriteClick, onPlayFilm, loadSimilarFilms} = props;
+  const {
+    films,
+    similarFilms,
+    loadComments,
+    comments,
+    authorizationStatus,
+    onAddFavoriteClick,
+    onPlayFilm,
+    loadSimilarFilms,
+    redirectTo404,
+  } = props;
   const [activeFilm, setActiveFilm] = useState(null);
   const {id} = useParams();
   const mainFilm = films.find((film) => film.id === Number(id));
@@ -22,6 +32,12 @@ function FilmPage(props) {
     loadComments(id);
     loadSimilarFilms(id);
   }, [id, loadComments, loadSimilarFilms]);
+  if (!mainFilm && films.length > 0) {
+    redirectTo404();
+  }
+  if (films.length === 0) {
+    return '';
+  }
   return (
     <>
       <section className="film-card film-card--full" style={{backgroundColor: mainFilm.color}}>
@@ -40,7 +56,7 @@ function FilmPage(props) {
                 <span className="logo__letter logo__letter--3">W</span>
               </Link>
             </div>
-            <UserAuthIcon />
+            <UserAuthIcon/>
           </header>
 
           <div className="film-card__wrap">
@@ -65,21 +81,25 @@ function FilmPage(props) {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    onAddFavoriteClick(mainFilm.id, !mainFilm.isMyList);
-                  }}
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref={mainFilm.isMyList ? '#in-list' : '#add'}></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
                 {
-                  authorizationStatus === 'AUTH' && <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">Add review</Link>
+                  authorizationStatus === 'AUTH' &&
+                  <button
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      onAddFavoriteClick(mainFilm.id, !mainFilm.isMyList);
+                    }}
+                    className="btn btn--list film-card__button"
+                    type="button"
+                  >
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref={mainFilm.isMyList ? '#in-list' : '#add'}></use>
+                    </svg>
+                    <span>My list</span>
+                  </button>
+                }
+                {
+                  authorizationStatus === 'AUTH' &&
+                  <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">Add review</Link>
                 }
               </div>
             </div>
@@ -154,6 +174,7 @@ FilmPage.propTypes = {
   similarFilms: PropTypes.arrayOf(filmPropTypes).isRequired,
   onPlayFilm: PropTypes.func.isRequired,
   loadSimilarFilms: PropTypes.func.isRequired,
+  redirectTo404: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => (
@@ -178,6 +199,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onPlayFilm: (filmId) => {
     dispatch(ActionCreator.redirectToRoute(AppRoute.PLAYER.replace(':id', filmId)));
+  },
+  redirectTo404: () => {
+    dispatch(ActionCreator.redirectToRoute(AppRoute.PAGE_404));
   },
 });
 

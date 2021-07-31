@@ -12,7 +12,6 @@ import {AuthorizationStatus} from './components/const';
 import {checkAuth, fetchFilmsList, fetchPromoFilm} from './store/api-actions';
 import {redirect} from './store/middlewares/redirect';
 
-
 const api = createAPI(
   () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );
@@ -37,3 +36,4 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root'),
 );
+

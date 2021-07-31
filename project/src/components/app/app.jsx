@@ -16,6 +16,7 @@ import PrivateRoute from '../private-route/private-rout.jsx';
 import {browserHistory} from '../browser-history.js';
 import {getFavoriteFilms, getFilms, getLoadedFilmsStatus} from '../../store/films-data/selectors';
 import {getUserStatus} from '../../store/user/selectors';
+import OnlyUnauthorizedRoute from '../only-unauthorized-route/only-unauthorized-route';
 
 
 function App(props) {
@@ -31,9 +32,12 @@ function App(props) {
         <Route exact path={AppRoute.ROOT}>
           <General/>
         </Route>
-        <Route exact path={AppRoute.SING_IN}>
-          <SingIn/>
-        </Route>
+        <OnlyUnauthorizedRoute
+          exact
+          path={AppRoute.SING_IN}
+          render={() => <SingIn/>}
+        >
+        </OnlyUnauthorizedRoute>
         <PrivateRoute
           exact
           path={AppRoute.MY_LIST}

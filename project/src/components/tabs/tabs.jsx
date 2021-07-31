@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 
 export default function Tabs(props) {
   const {film, comments} = props;
+  const commentsLeft = comments.filter((_, index) => ((index + 1) % 2) === 1);
+  const commentsRight = comments.filter((_, index) => ((index + 1) % 2) === 0);
   const [activeTab, setActiveTab] = useState(tabs.OVERVIEW);
   const pageTabs = [
     {text: 'Overview', data: 'OVERVIEW'},
@@ -46,14 +48,28 @@ export default function Tabs(props) {
         />
       )}
       {activeTab === tabs.REVIEWS && (
-        comments.map((comment) => (
-          <TabsReviews
-            reviewRating={comment.rating}
-            reviewText={comment.comment}
-            userName={comment.user.name}
-            commentDate={comment.date}
-            key={comment.id}
-          />))
+        <div className="film-card__reviews film-card__row">
+          <div className="film-card__reviews-col">
+            {commentsLeft.map((comment) => (
+              <TabsReviews
+                reviewRating={comment.rating}
+                reviewText={comment.comment}
+                userName={comment.user.name}
+                commentDate={comment.date}
+                key={comment.id}
+              />))}
+          </div>
+          <div className="film-card__reviews-col">
+            {commentsRight.map((comment) => (
+              <TabsReviews
+                reviewRating={comment.rating}
+                reviewText={comment.comment}
+                userName={comment.user.name}
+                commentDate={comment.date}
+                key={comment.id}
+              />))}
+          </div>
+        </div>
       )}
     </div>
   );

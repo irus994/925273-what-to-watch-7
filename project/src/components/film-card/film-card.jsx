@@ -7,14 +7,16 @@ export default function FilmCard(props) {
   const {filmName, id, prevPoster, video, onPointerEnter, onPointerLeave, isActive} = props;
   return (
     <article onPointerEnter={onPointerEnter} onPointerLeave={onPointerLeave} className="small-film-card catalog__films-card">
-      <VideoPlayer
-        prevPoster={prevPoster}
-        video={video}
-        isActive={isActive}
-      />
-      <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${id}`}> {filmName}</Link>
-      </h3>
+      <Link className="small-film-card__link" to={`/films/${id}`}>
+        <VideoPlayer
+          prevPoster={prevPoster}
+          video={video}
+          isActive={isActive}
+        />
+        <h3 className="small-film-card__title">
+          {filmName}
+        </h3>
+      </Link>
     </article>
   );
 }

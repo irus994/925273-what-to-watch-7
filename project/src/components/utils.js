@@ -36,3 +36,24 @@ export const gerHoursForPlayer = (allSeconds) => {
     return `-${minutes}:${seconds}`;
   }
 };
+
+export const getDataComment = (data) => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const year = data.substr(0, 4);
+  const day = data.substr(8, 2);
+  const month = months[parseInt(data.substr(5, 2), 10) - 1];
+  return `${month} ${day}, ${year}`;
+};

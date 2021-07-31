@@ -6,8 +6,7 @@ export const AppRoute = {
   FILM: '/films/:id',
   ADD_REVIEW: '/films/:id/review',
   PLAYER: '/player/:id',
-  DEV_ARTIST: '/dev-artist',
-  DEV_GENRE: '/dev-genre',
+  PAGE_404: '/404',
 };
 
 export const GENRE_DEFAULT = 'All genre';

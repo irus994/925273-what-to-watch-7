@@ -13,6 +13,6 @@ export default function Genre(props) {
 
 Genre.propTypes = {
   name: PropTypes.string.isRequired,
-  isActive: PropTypes.bool,
+  isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };

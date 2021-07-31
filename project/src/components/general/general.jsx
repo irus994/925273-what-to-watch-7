@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import FilmsList from '../films-list/films-list.jsx';
 import {filmPropTypes} from '../films-prop-types.js';
 import GenreList from '../genre-list/genre-list.jsx';
-import {AuthorizationStatus} from '../const.js';
+import {AppRoute, AuthorizationStatus} from '../const.js';
 import UserAuthIcon from '../user-auth-icon/user-auth-icon.jsx';
 import {connect} from 'react-redux';
 import {getFilms, getPromoFilms} from '../../store/films-data/selectors';
 import {getUserStatus} from '../../store/user/selectors';
 import {toggleFavorite} from '../../store/api-actions';
+import {ActionCreator} from '../../store/action';
 
 function General(props) {
-  const {films, promoFilm, onAddFavoriteClick} = props;
+  const {films, promoFilm, onAddFavoriteClick, onPlayFilm, authorizationStatus} = props;
   return (
     <>
       {promoFilm && (
@@ -46,25 +47,34 @@ function General(props) {
                   <span className="film-card__year">{promoFilm.year}</span>
                 </p>
                 <div className="film-card__buttons">
-                  <button className="btn btn--play film-card__button" type="button">
+                  <button
+                    className="btn btn--play film-card__button"
+                    type="button"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      onPlayFilm(promoFilm.id);
+                    }}
+                  >
                     <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s" />
+                      <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      onAddFavoriteClick(promoFilm.id, !promoFilm.isMyList);
-                    }}
-                    className="btn btn--list film-card__button"
-                    type="button"
-                  >
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref={promoFilm.isMyList ? '#in-list' : '#add'}></use>
-                    </svg>
-                    <span>My list</span>
-                  </button>
+                  {authorizationStatus === 'AUTH' && (
+                    <button
+                      onClick={(evt) => {
+                        evt.preventDefault();
+                        onAddFavoriteClick(promoFilm.id, !promoFilm.isMyList);
+                      }}
+                      className="btn btn--list film-card__button"
+                      type="button"
+                    >
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref={promoFilm.isMyList ? '#in-list' : '#add'}></use>
+                      </svg>
+                      <span>My list</span>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -107,6 +117,8 @@ General.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
   promoFilm: filmPropTypes,
   onAddFavoriteClick: PropTypes.func.isRequired,
+  onPlayFilm: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => (
@@ -120,6 +132,9 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => ({
   onAddFavoriteClick: (filmId, status) => {
     dispatch(toggleFavorite(filmId, status));
+  },
+  onPlayFilm: (filmId) => {
+    dispatch(ActionCreator.redirectToRoute(AppRoute.PLAYER.replace(':id', filmId)));
   },
 });
 

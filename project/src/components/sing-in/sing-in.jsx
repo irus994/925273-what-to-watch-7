@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
@@ -6,10 +6,23 @@ import {login} from '../../store/api-actions';
 export function SingIn ({onSubmit}) {
   const loginRef = useRef();
   const passwordRef = useRef();
+  const [emailError, setEmailError] = useState('');
+  const [passError, setPassError] = useState('');
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
+    if (loginRef.current.validity.valid) {
+      setEmailError('');
+    } else {
+      setEmailError('Please enter a valid email address');
+      return;
+    }
+    if (!passwordRef.current.value.match(/^[\s]*$/)) {
+      setPassError('');
+    } else {
+      setPassError('Please enter a valid password');
+      return;
+    }
     onSubmit({
       login: loginRef.current.value,
       password: passwordRef.current.value,
@@ -31,13 +44,20 @@ export function SingIn ({onSubmit}) {
       </header>
 
       <div className="sign-in user-page__content">
-        <form action="#" onSubmit={handleSubmit} className="sign-in__form">
+        <form noValidate action="#" onSubmit={handleSubmit} className="sign-in__form">
+          {
+            (emailError || passError) && (
+              <div className="sign-in__message">
+                <p>{emailError ? emailError : passError} </p>
+              </div>
+            )
+          }
           <div className="sign-in__fields">
-            <div className="sign-in__field">
+            <div className={emailError ? 'sign-in__field sign-in__field--error' : 'sign-in__field'}>
               <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email"/>
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
-            <div className="sign-in__field">
+            <div className={passError ? 'sign-in__field sign-in__field--error' : 'sign-in__field'}>
               <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password"/>
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>

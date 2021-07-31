@@ -20,3 +20,13 @@ export function adaptToClient(movie) {
 
   return adaptedMovie;
 }
+export function adaptUserDataToClient(user) {
+  const adaptedUserData = Object.assign(
+    {},
+    user,
+    {
+      avatarUrl: user.avatar_url,
+    },
+  );
+  return adaptedUserData;
+}
