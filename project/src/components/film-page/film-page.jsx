@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, Redirect, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Tabs from '../tabs/tabs.jsx';
 import {getComments, getFilms, getSimilarFilms} from '../../store/films-data/selectors';
@@ -23,7 +23,6 @@ function FilmPage(props) {
     onAddFavoriteClick,
     onPlayFilm,
     loadSimilarFilms,
-    redirectTo404,
   } = props;
   const [activeFilm, setActiveFilm] = useState(null);
   const {id} = useParams();
@@ -33,7 +32,9 @@ function FilmPage(props) {
     loadSimilarFilms(id);
   }, [id, loadComments, loadSimilarFilms]);
   if (!mainFilm && films.length > 0) {
-    redirectTo404();
+    return (
+      <Redirect to={AppRoute.PAGE_404} />
+    );
   }
   if (films.length === 0) {
     return '';
@@ -174,7 +175,6 @@ FilmPage.propTypes = {
   similarFilms: PropTypes.arrayOf(filmPropTypes).isRequired,
   onPlayFilm: PropTypes.func.isRequired,
   loadSimilarFilms: PropTypes.func.isRequired,
-  redirectTo404: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => (
@@ -199,9 +199,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onPlayFilm: (filmId) => {
     dispatch(ActionCreator.redirectToRoute(AppRoute.PLAYER.replace(':id', filmId)));
-  },
-  redirectTo404: () => {
-    dispatch(ActionCreator.redirectToRoute(AppRoute.PAGE_404));
   },
 });
 
