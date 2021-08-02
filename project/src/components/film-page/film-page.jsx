@@ -28,8 +28,10 @@ function FilmPage(props) {
   const {id} = useParams();
   const mainFilm = films.find((film) => film.id === Number(id));
   useEffect(() => {
-    loadComments(id);
-    loadSimilarFilms(id);
+    if (mainFilm) {
+      loadComments(id);
+      loadSimilarFilms(id);
+    }
   }, [id, loadComments, loadSimilarFilms]);
   if (!mainFilm && films.length > 0) {
     return (

@@ -1,19 +1,20 @@
 import React from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, Redirect, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AddReviewForm from '../review-form/review-form.jsx';
 import {filmPropTypes} from '../films-prop-types';
 import {getFilms} from '../../store/films-data/selectors';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
 import {AppRoute} from '../const';
 
 function AddReview(props) {
-  const {films, redirectTo404} = props;
+  const {films} = props;
   const {id} = useParams();
   const mainFilm = films.find((film) => film.id === Number(id));
   if (!mainFilm && films.length > 0) {
-    redirectTo404();
+    return (
+      <Redirect to={AppRoute.PAGE_404} />
+    );
   }
   if (films.length === 0) {
     return '';
@@ -74,7 +75,6 @@ function AddReview(props) {
 
 AddReview.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
-  redirectTo404: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => (
@@ -83,11 +83,5 @@ const mapStateToProps = (state) => (
   }
 );
 
-const mapDispatchToProps = (dispatch) => ({
-  redirectTo404: () => {
-    dispatch(ActionCreator.redirectToRoute(AppRoute.PAGE_404));
-  },
-});
-
 export {AddReview};
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default connect(mapStateToProps)(AddReview);

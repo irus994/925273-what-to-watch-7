@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import {useParams} from 'react-router-dom';
+import {Redirect, useParams} from 'react-router-dom';
 import {filmPropTypes} from '../films-prop-types';
 import {getFilms} from '../../store/films-data/selectors';
 import {connect} from 'react-redux';
@@ -9,16 +9,20 @@ import {ActionCreator} from '../../store/action';
 import {AppRoute} from '../const';
 
 function Player (props) {
-  const {films, onPlayFilm, redirectTo404} = props;
+  const {films, onPlayFilm} = props;
   const videoRef = useRef(null);
   const {id} = useParams();
   const mainFilm = films.find((film) => film.id === Number(id));
-  const runTime = videoRef.current ? videoRef.current.duration : mainFilm.runTime * 60;
+  const runTime = videoRef.current
+    ? videoRef.current.duration
+    : mainFilm?.runTime * 60;
   const [remainingTime, setRemainingTime] = useState(runTime);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDataLoading, setDataLoading] = useState(false);
   if (!mainFilm && films.length > 0) {
-    redirectTo404();
+    return (
+      <Redirect to={AppRoute.PAGE_404}/>
+    );
   }
   if (films.length === 0) {
     return '';
@@ -113,7 +117,6 @@ function Player (props) {
 Player.propTypes = {
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
   onPlayFilm: PropTypes.func.isRequired,
-  redirectTo404: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => (
@@ -125,9 +128,6 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => ({
   onPlayFilm: (filmId) => {
     dispatch(ActionCreator.redirectToRoute(AppRoute.FILM.replace(':id', filmId)));
-  },
-  redirectTo404: () => {
-    dispatch(ActionCreator.redirectToRoute(AppRoute.PAGE_404));
   },
 });
 

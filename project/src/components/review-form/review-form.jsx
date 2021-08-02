@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {AppRoute, starsReview} from '../const.js';
+import {starsReview} from '../const.js';
 import RatingStar from '../rating-star/rating-star.jsx';
 import PropTypes from 'prop-types';
 import {addComment} from '../../store/api-actions';
@@ -7,7 +7,6 @@ import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import {getFilms} from '../../store/films-data/selectors';
 import {filmPropTypes} from '../films-prop-types';
-import {ActionCreator} from '../../store/action';
 
 const MIN_LENGTH = 50;
 const MAX_LENGTH = 400;
@@ -15,19 +14,13 @@ const MAX_LENGTH = 400;
 const isCommentTextValid = (text) => text.length <= MAX_LENGTH && text.length >= MIN_LENGTH;
 
 function AddReviewForm(props) {
-  const {onAddComment, films, redirectTo404} = props;
+  const {onAddComment, films} = props;
   const {id} = useParams();
   const mainFilm = films.find((film) => film.id === Number(id));
   const [commentText, setCommentText] = useState('');
   const [userRating, setUserRating] = useState();
   const [isFormBlocked, setIsFormBlocked] = useState(false);
   const [isButtonBlocked, setIsButtonBlocked] = useState(true);
-  if (!mainFilm && films.length > 0) {
-    redirectTo404();
-  }
-  if (films.length === 0) {
-    return '';
-  }
   return (
     <form onSubmit={(evt) => {
       evt.preventDefault();
@@ -98,7 +91,6 @@ function AddReviewForm(props) {
 
 AddReviewForm.propTypes = {
   onAddComment: PropTypes.func.isRequired,
-  redirectTo404: PropTypes.func.isRequired,
   films: PropTypes.arrayOf(filmPropTypes).isRequired,
 };
 
@@ -110,9 +102,6 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => ({
   onAddComment: (filmId, userRating, commentText) => dispatch(addComment(filmId, userRating, commentText)),
-  redirectTo404: () => {
-    dispatch(ActionCreator.redirectToRoute(AppRoute.PAGE_404));
-  },
 });
 
 export {AddReviewForm};
